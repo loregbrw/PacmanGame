@@ -1,0 +1,9 @@
+1 - Criar labirinto com matrizes
+2 - Andar o personagem com W A S D
+3 - Criar fantasmas que surgem no quadrado central, eles podem se mexer aleatóriamente pelo labirinto ou ir e voltar em um caminho definido do labirinto
+4 - Quando o personagem encostar nos fantasmas morrera, ele tem 3 vidas para pegar todas as bolinhas, se não o jogo acaba e é perdido
+5 - Colocar as bolinhas no labirinto
+6 - Fazer o personagem comer as bolinhas, cada bolinha é 10 pontos, assim que ela for comida some
+7 - Entre as bolinhas será escolhido aleatóriamente um lugar para que surja uma cereja, que poderá ser comida pelo personagem e sumirá
+8 - Quando a cereja for comida os fantasmas ficarão vulneráveis, e o personagem porderá tentar come-los por 10 segundos, depois voltarão ao normal
+
