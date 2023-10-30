@@ -11,8 +11,6 @@ void walls()
         background[i][0] = 1;
         background[i][20] = 1;
     }
-
-    
 }
 
 int main(void)
