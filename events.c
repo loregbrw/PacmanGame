@@ -17,10 +17,7 @@ int main(void)
 {
     while (1)
     {
-
         printf("%i\n", get_input());
-
-        
     }
     
     return 0;
