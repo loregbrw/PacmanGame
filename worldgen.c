@@ -23,14 +23,30 @@ int background[20][20] = {
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
 
-
-int main(void)
+void circles()
 {
     for (int i = 0; i < 20; i++)
     {
         for (int j = 0; j < 20; j++)
         {
+            if (background[i][j] == 0)
+            {
+                background[i][j] = 2;
+            }
+        }
+    }
+}
+
+
+int main(void)
+{
+    circles();
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
             if (background[i][j] == 0) {printf("  ");}
+            else if (background[i][j] == 2) {printf("* ");}
             else {printf("o ");}
         }
         printf("\n");
