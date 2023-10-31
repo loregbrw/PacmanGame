@@ -3,11 +3,6 @@
 
 #define WALLS 1
 
-typedef struct
-{
-    int x, y;
-} Pacman;
-
 int background[20][20] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -29,18 +24,17 @@ int background[20][20] = {
 {1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 1},
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
-
 int n;
 
 void circles()
 {
-    for (int y = 0; y < 20; y++)
+    for (int i = 0; i < 20; i++)
     {
-        for (int x = 0; x < 20; x++)
+        for (int j = 0; j < 20; j++)
         {
-            if (background[y][x] == 0)
+            if (background[i][j] == 0)
             {
-                background[y][x] = 2;
+                background[i][j] = 2;
             }
         }
     }
@@ -53,16 +47,16 @@ void specialFruit()
     int position = 0;
     printf("%i\n", n);
 
-    for (int y = 0; y < 20; y++)
+    for (int i = 0; i < 20; i++)
     {
-        for (int x = 0; x < 20; x++)
+        for (int j = 0; j < 20; j++)
         {
-            if (background[y][x] == 2)
+            if (background[i][j] == 2)
             {
                 position++;
                 if (position == n)
                 {
-                    background[y][x] = 5;
+                    background[i][j] = 5;
                     break;
                 }
             }
@@ -74,13 +68,13 @@ int main(void)
 {
     circles();
     specialFruit();
-    for (int y = 0; y < 20; y++)
+    for (int i = 0; i < 20; i++)
     {
-        for (int x = 0; x < 20; x++)
+        for (int j = 0; j < 20; j++)
         {
-            if (background[y][x] == 5) {printf("Y ");}
-            else if (background[y][x] == 2) {printf("* ");}
-            else if (background[y][x] == 0) {printf("  ");}
+            if (background[i][j] == 5) {printf("Y ");}
+            else if (background[i][j] == 2) {printf("* ");}
+            else if (background[i][j] == 0) {printf("  ");}
             else {printf("o ");}
         }
         printf("\n");

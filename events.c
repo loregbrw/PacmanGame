@@ -3,6 +3,11 @@
 
 char user_input;
 
+typedef struct
+{
+    int x, y;
+} Pacman;
+
 int get_input()
 {
     if (_kbhit())
