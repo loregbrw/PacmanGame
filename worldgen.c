@@ -1,5 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+
 #define WALLS 1
+
+typedef struct
+{
+    int x, y;
+} Pacman;
 
 int background[20][20] = {
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -23,30 +30,57 @@ int background[20][20] = {
 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},};
 
+int n;
+
 void circles()
 {
-    for (int i = 0; i < 20; i++)
+    for (int y = 0; y < 20; y++)
     {
-        for (int j = 0; j < 20; j++)
+        for (int x = 0; x < 20; x++)
         {
-            if (background[i][j] == 0)
+            if (background[y][x] == 0)
             {
-                background[i][j] = 2;
+                background[y][x] = 2;
             }
         }
     }
 }
 
+void specialFruit()
+{
+    srand(time(NULL));
+    n = 1 + (rand() % 200);
+    int position = 0;
+    printf("%i\n", n);
+
+    for (int y = 0; y < 20; y++)
+    {
+        for (int x = 0; x < 20; x++)
+        {
+            if (background[y][x] == 2)
+            {
+                position++;
+                if (position == n)
+                {
+                    background[y][x] = 5;
+                    break;
+                }
+            }
+        }
+    }
+}
 
 int main(void)
 {
     circles();
-    for (int i = 0; i < 20; i++)
+    specialFruit();
+    for (int y = 0; y < 20; y++)
     {
-        for (int j = 0; j < 20; j++)
+        for (int x = 0; x < 20; x++)
         {
-            if (background[i][j] == 0) {printf("  ");}
-            else if (background[i][j] == 2) {printf("* ");}
+            if (background[y][x] == 5) {printf("Y ");}
+            else if (background[y][x] == 2) {printf("* ");}
+            else if (background[y][x] == 0) {printf("  ");}
             else {printf("o ");}
         }
         printf("\n");

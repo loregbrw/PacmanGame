@@ -15,6 +15,38 @@ int get_input()
     return -1;
 }
 
+int commands(int input)
+{
+    if (input == 119)
+    {
+        // Tecla W, subir
+    }
+    else if (input == 97)
+    {
+        // Tecla A, esquerda
+    }
+    else if (input == 115)
+    {
+        // Tecla S, descer
+    }
+    else if (input == 100)
+    {
+        // Tecla D, direita
+    }
+    else if (input == 13)
+    {
+        // Tecla enter
+    }
+    else if (input == 32)
+    {
+        // Tecla espaço
+    }
+    else
+    {
+        // Nada
+    }    
+}
+
 int main(void)
 {
     while (1)

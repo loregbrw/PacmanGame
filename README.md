@@ -13,3 +13,5 @@ bolinhas = 2
 pacman = 3
 fantasmas = 4
 frutinhas = 5
+
+fundo = 199
