@@ -9,24 +9,25 @@ int n;
 
 void defineBackground()
 {
-    FILE * matrix = fopen("../background.txt", "r");
+    FILE *matrix = fopen("../background.txt", "r");
 
     int line = 0, col = 0;
     char c;
 
     while ((c = fgetc(matrix)) != EOF)
     {
-        if (c == '\r') {continue;}
+        if (c == '\r')
+        {
+            continue;
+        }
         if (c == '\n')
         {
-            col =0;
+            col = 0;
             line++;
             continue;
         }
-
         background[line][col++] = c - '0';
     }
-
     fclose(matrix);
 }
 
@@ -49,8 +50,6 @@ void specialFruit()
     srand(time(NULL));
     n = rand() % 200;
     int position = 0;
-    printf("%i\n", n);
-
     for (int i = 0; i < 20; i++)
     {
         for (int j = 0; j < 20; j++)
@@ -77,14 +76,26 @@ int main(void)
     {
         for (int j = 0; j < 20; j++)
         {
-            if (background[i][j] == 5) {printf("Y ");}
-            else if (background[i][j] == 2) {printf("* ");}
-            else if (background[i][j] == 0) {printf("  ");}
-            else {printf("o ");}
+            if (background[i][j] == 5)
+            {
+                printf("Y ");
+            }
+            else if (background[i][j] == 2)
+            {
+                printf("* ");
+            }
+            else if (background[i][j] == 0)
+            {
+                printf("  ");
+            }
+            else
+            {
+                printf("o ");
+            }
             // printf("%i ", background[i][j]);
         }
         printf("\n");
     }
-    
+
     return 0;
 }
