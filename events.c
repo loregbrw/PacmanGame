@@ -1,14 +1,16 @@
 #include <stdio.h>
 #include <conio.h>
 
-char user_input;
-
 typedef struct
 {
     int x, y;
-} Pacman;
+} Character;
 
-int get_input()
+char user_input;
+Character pacman_player, ghost1, ghost2, ghost3, ghost4; 
+
+
+int getInput()
 {
     if (_kbhit())
     {
@@ -18,6 +20,45 @@ int get_input()
         return int_input;
     }
     return -1;
+}
+
+void findPacman()
+{
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            // achar o pacman
+        }
+    }
+}
+
+
+void moveUp(Character character)
+{
+    if (character.y-- == 0)
+    {
+        // andar
+    }
+    else if (character.y-- == 1)
+    {
+        // não fazer nada
+    }
+    else if (character.y-- == 2)
+    {
+        // andar e comer bolinha
+        // ganhar pontuação
+    }
+    else if (character.y-- == 4)
+    {
+        // morrer
+    }
+    else if (character.y-- == 5)
+    {
+        // andar e comer frutinha
+        // ganhar pontuação
+        // poder especial
+    }
 }
 
 int commands(int input)
@@ -56,7 +97,7 @@ int main(void)
 {
     while (1)
     {
-        printf("%i\n", get_input());
+        printf("%i\n", getInput());
     }
     
     return 0;

@@ -88,11 +88,14 @@ int main(void)
             {
                 printf("  ");
             }
+            else if (background[i][j] == 3)
+            {
+                printf("X ");
+            }
             else
             {
                 printf("o ");
             }
-            // printf("%i ", background[i][j]);
         }
         printf("\n");
     }
