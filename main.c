@@ -123,11 +123,11 @@ void moveUp (Character* character)
         {
             score++;
         }
-        if (background[character->y--][character->x] == 4)
+        else if (background[character->y--][character->x] == 4)
         {
             game_over = true;
         }
-        if (background[character->y--][character->x] == 5)
+        else if (background[character->y--][character->x] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -146,11 +146,11 @@ void moveLeft (Character* character)
         {
             score++;
         }
-        if (background[character->y][character->x--] == 4)
+        else if (background[character->y][character->x--] == 4)
         {
             game_over = true;
         }
-        if (background[character->y][character->x--] == 5)
+        else if (background[character->y][character->x--] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -168,11 +168,11 @@ void moveDown (Character* character)
         {
             score++;
         }
-        if (background[character->y++][character->x] == 4)
+        else if (background[character->y++][character->x] == 4)
         {
             game_over = true;
         }
-        if (background[character->y++][character->x] == 5)
+        else if (background[character->y++][character->x] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -190,11 +190,11 @@ void moveRight (Character* character)
         {
             score++;
         }
-        if (background[character->y][character->x++] == 4)
+        else if (background[character->y][character->x++] == 4)
         {
             game_over = true;
         }
-        if (background[character->y][character->x++] == 5)
+        else if (background[character->y][character->x++] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -272,6 +272,7 @@ int main(void)
             printf("\n");
         }
         printf("\n y: %i - x: %i", pacman_player.y, pacman_player.x);
+        
     }
     
     return 0;
