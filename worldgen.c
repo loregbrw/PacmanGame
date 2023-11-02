@@ -31,6 +31,7 @@ void defineBackground()
         background[line][col++] = c - '0';
     }
     fclose(matrix);
+
 }
 
 void circles()
