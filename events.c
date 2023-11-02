@@ -13,6 +13,26 @@ Character pacman_player, ghost1, ghost2, ghost3, ghost4;
 
 
 
+void moveUp (Character character)
+{
+    character.y++;
+}
+
+void moveLeft (Character character)
+{
+    character.x--;
+}
+
+void moveDown (Character character)
+{
+    character.y--;
+}
+
+void moveRight (Character character)
+{
+    character.x++;
+}
+
 void changePositions (Character character, int new_x, int new_y)
 {
     character.x = new_x;
@@ -35,18 +55,22 @@ int commands(int input)
 {
     if (input == 119)
     {
+        moveUp(pacman_player);
         // Tecla W, subir
     }
     else if (input == 97)
     {
+        moveLeft(pacman_player);
         // Tecla A, esquerda
     }
     else if (input == 115)
     {
+        moveDown(pacman_player);
         // Tecla S, descer
     }
     else if (input == 100)
     {
+        moveRight(pacman_player);
         // Tecla D, direita
     }
     else if (input == 13)
