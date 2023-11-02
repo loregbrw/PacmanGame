@@ -12,6 +12,13 @@ char user_input;
 Character pacman_player, ghost1, ghost2, ghost3, ghost4; 
 
 
+
+void changePositions (Character character, int new_x, int new_y)
+{
+    character.x = new_x;
+    character.y = new_y;
+}
+
 int getInput()
 {
     if (_kbhit())
