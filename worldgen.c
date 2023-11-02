@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include "worldgen.h"
+
 #define WALLS 1
 
 int background[20][20];

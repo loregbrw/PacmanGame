@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <conio.h>
 
+#include "events.h"
+
 typedef struct
 {
     int x, y;
@@ -20,45 +22,6 @@ int getInput()
         return int_input;
     }
     return -1;
-}
-
-void findPacman()
-{
-    for (int i = 0; i < 20; i++)
-    {
-        for (int j = 0; j < 20; j++)
-        {
-            // achar o pacman
-        }
-    }
-}
-
-
-void moveUp(Character character)
-{
-    if (character.y-- == 0)
-    {
-        // andar
-    }
-    else if (character.y-- == 1)
-    {
-        // não fazer nada
-    }
-    else if (character.y-- == 2)
-    {
-        // andar e comer bolinha
-        // ganhar pontuação
-    }
-    else if (character.y-- == 4)
-    {
-        // morrer
-    }
-    else if (character.y-- == 5)
-    {
-        // andar e comer frutinha
-        // ganhar pontuação
-        // poder especial
-    }
 }
 
 int commands(int input)
