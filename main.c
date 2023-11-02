@@ -239,6 +239,9 @@ int main(void)
     specialFruit();
     while (1)
     {
+        int input = getInput();
+        commands(input);
+        
         background[pacman_player.y][pacman_player.x] = 3;
         system("cls");
         for (int i = 0; i < 20; i++)
@@ -268,6 +271,7 @@ int main(void)
             }
             printf("\n");
         }
+        printf("\n y: %i - x: %i", pacman_player.y, pacman_player.x);
     }
     
     return 0;
