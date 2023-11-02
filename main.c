@@ -31,15 +31,15 @@ int getInput() // pegar o input do usuario
     return -1;
 }
 
-// void changePositions (Character character, int new_x, int new_y) // definir a posição de um personagem
-// {
-//     if (background[new_y][new_x] != 1)
-//     {
-//         character.x = new_x;
-//         character.y = new_y;
-//     }
+void changePositions (Character* character, int new_y, int new_x) // definir a posição de um personagem
+{
+    if (background[new_y][new_x] != 1)
+    {
+        character->x = new_x;
+        character->y = new_y;
+    }
     
-// }
+}
 
 void defineBackground() // redefine o fundo para o padrão inicial
 {
@@ -64,8 +64,7 @@ void defineBackground() // redefine o fundo para o padrão inicial
     }
     fclose(matrix);
 
-    pacman_player.y = 18;
-    pacman_player.x = 1;
+    changePositions(&pacman_player, 18, 1);
 }
 
 void circles() // coloca as bolinhas no labirinto
@@ -114,21 +113,21 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
-void moveUp (Character character) 
+void moveUp (Character* character) 
 {
-    if (background[character.y--][character.x] != 1)
+    if (background[character->y--][character->x] != 1)
     {
-        character.y--;
+        character->y--;
 
-        if (background[character.y--][character.x] == 2)
+        if (background[character->y--][character->x] == 2)
         {
             score++;
         }
-        if (background[character.y--][character.x] == 4)
+        if (background[character->y--][character->x] == 4)
         {
             game_over = true;
         }
-        if (background[character.y--][character.x] == 5)
+        if (background[character->y--][character->x] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -137,21 +136,21 @@ void moveUp (Character character)
     
 }
 
-void moveLeft (Character character)
+void moveLeft (Character* character)
 {
-    if (background[character.y][character.x--] != 1)
+    if (background[character->y][character->x--] != 1)
     {
-        character.x--;
+        character->x--;
 
-        if (background[character.y][character.x--] == 2)
+        if (background[character->y][character->x--] == 2)
         {
             score++;
         }
-        if (background[character.y][character.x--] == 4)
+        if (background[character->y][character->x--] == 4)
         {
             game_over = true;
         }
-        if (background[character.y][character.x--] == 5)
+        if (background[character->y][character->x--] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -159,21 +158,21 @@ void moveLeft (Character character)
     }
 }
 
-void moveDown (Character character)
+void moveDown (Character* character)
 {
-    if (background[character.y++][character.x] != 1)
+    if (background[character->y++][character->x] != 1)
     {
-        character.y++;
+        character->y++;
 
-        if (background[character.y++][character.x] == 2)
+        if (background[character->y++][character->x] == 2)
         {
             score++;
         }
-        if (background[character.y++][character.x] == 4)
+        if (background[character->y++][character->x] == 4)
         {
             game_over = true;
         }
-        if (background[character.y++][character.x] == 5)
+        if (background[character->y++][character->x] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -181,21 +180,21 @@ void moveDown (Character character)
     }
 }
 
-void moveRight (Character character)
+void moveRight (Character* character)
 {
-    if (background[character.y][character.x++] != 1)
+    if (background[character->y][character->x++] != 1)
     {
-        character.x++;
+        character->x++;
 
-        if (background[character.y][character.x++] == 2)
+        if (background[character->y][character->x++] == 2)
         {
             score++;
         }
-        if (background[character.y][character.x++] == 4)
+        if (background[character->y][character->x++] == 4)
         {
             game_over = true;
         }
-        if (background[character.y][character.x++] == 5)
+        if (background[character->y][character->x++] == 5)
         {
             score += 5;
             // função do poder da frutinha
@@ -207,19 +206,19 @@ void commands(int input)
 {
     if (input == 119)
     {
-        moveUp(pacman_player); // Tecla W, subir
+        moveUp(&pacman_player); // Tecla W, subir
     }
     else if (input == 97)
     {
-        moveLeft(pacman_player); // Tecla A, esquerda
+        moveLeft(&pacman_player); // Tecla A, esquerda
     }
     else if (input == 115)
     {
-        moveDown(pacman_player); // Tecla S, descer
+        moveDown(&pacman_player); // Tecla S, descer
     }
     else if (input == 100)
     {
-        moveRight(pacman_player); // Tecla D, direita
+        moveRight(&pacman_player); // Tecla D, direita
     }
     else if (input == 13)
     {
