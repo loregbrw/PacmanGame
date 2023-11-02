@@ -9,6 +9,6 @@ void moveRight (Character character)
 void changePositions (Character character, int new_x, int new_y);
 
 int getInput();
-int commands(int input);
+void commands(int input);
 
 #endif

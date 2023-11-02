@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include "worldgen.h"
+// #include "events.h"
 
-#define WALLS 1
+// #define WALLS 1
 
 int background[20][20];
 int n;
@@ -31,7 +31,6 @@ void defineBackground()
         background[line][col++] = c - '0';
     }
     fclose(matrix);
-
 }
 
 void circles()

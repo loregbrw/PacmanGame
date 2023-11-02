@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <conio.h>
 
-#include "events.h"
+// #include "events.h"
 
 typedef struct
 {
@@ -15,7 +15,7 @@ Character pacman_player, ghost1, ghost2, ghost3, ghost4;
 
 void moveUp (Character character)
 {
-    character.y++;
+    character.y--;
 }
 
 void moveLeft (Character character)
@@ -25,7 +25,7 @@ void moveLeft (Character character)
 
 void moveDown (Character character)
 {
-    character.y--;
+    character.y++;
 }
 
 void moveRight (Character character)
@@ -51,7 +51,7 @@ int getInput()
     return -1;
 }
 
-int commands(int input)
+void commands(int input)
 {
     if (input == 119)
     {
