@@ -19,6 +19,11 @@ bool game_over;
 
 // FUNÇÕES ===============================================
 
+void pass()
+{
+    //função vazia
+}
+
 int getInput() // pegar o input do usuario
 {
     if (_kbhit())
@@ -172,12 +177,8 @@ void commands(int input)
     }
 }
 
-// MAIN ===============================================
-
-int main(void)
+void gameLoop()
 {
-    startGame();
-    
     while (1)
     {
         commands(getInput());
@@ -214,6 +215,15 @@ int main(void)
         printf("\n y: %i - x: %i", pacman_player.y, pacman_player.x);
         
     }
+}
+
+// MAIN ===============================================
+
+int main(void)
+{
+    startGame();
+    
+    gameLoop();
     
     return 0;
 }
