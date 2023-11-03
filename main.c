@@ -113,6 +113,13 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
+void startGame()
+{
+    defineBackground();
+    circles();
+    specialFruit();
+}
+
 void moveUp (Character* character) 
 {
     background[character->y][character->x] = 0;
@@ -141,9 +148,7 @@ void commands(int input)
 {
     if (input == 119)
     {
-
         moveUp(&pacman_player); // Tecla W, subir
-
     }
     else if (input == 97)
     {
@@ -171,9 +176,8 @@ void commands(int input)
 
 int main(void)
 {
-    defineBackground();
-    circles();
-    specialFruit();
+    startGame();
+    
     while (1)
     {
         commands(getInput());
@@ -190,7 +194,7 @@ int main(void)
                 }
                 else if (background[i][j] == 2)
                 {
-                    printf("* ");
+                    printf(". ");
                 }
                 else if (background[i][j] == 0)
                 {
