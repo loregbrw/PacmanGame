@@ -19,11 +19,6 @@ bool game_over;
 
 // FUNÇÕES ===============================================
 
-void pass()
-{
-    //função vazia
-}
-
 int getInput() // pegar o input do usuario
 {
     if (_kbhit())
@@ -127,26 +122,38 @@ void startGame()
 
 void moveUp (Character* character) 
 {
-    background[character->y][character->x] = 0;
-    character->y--;
+    if (background[(character->y) - 1][character->x] != 1)
+    {
+        background[character->y][character->x] = 0;
+        character->y--;
+    }
 }
 
 void moveLeft (Character* character)
 {
-    background[character->y][character->x] = 0;
-    character->x--;
+    if (background[character->y][(character->x) - 1] != 1)
+    {
+        background[character->y][character->x] = 0;
+        character->x--;
+    }
 }
 
 void moveDown (Character* character)
 {
-    background[character->y][character->x] = 0;
-    character->y++;
+    if (background[(character->y) + 1][character->x] != 1)
+    {
+        background[character->y][character->x] = 0;
+        character->y++;
+    }
 }
 
 void moveRight (Character* character)
 {
-    background[character->y][character->x] = 0;
-    character->x++;
+    if (background[character->y][(character->x) + 1] != 1)
+    {
+        background[character->y][character->x] = 0;
+        character->x++;
+    }
 }
 
 void commands(int input)
