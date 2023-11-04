@@ -194,24 +194,32 @@ void moveRight (Character* character)
 
 void ghostsMovements(Character* character)
 {
-    for (int i = 0; i < 20; i++)
+
+    if (character->y < pacman_player.y)
     {
-        for (int j = 0; j < 20; j++)
+        if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
         {
-            if (background[i][j] == 3)
-            {
-                if (character->y < i)
-                {
-                    if (background[(character->y) + 1][character->x] != 1)
-                    {
-                        character->value2 = background[(character->y) + 1][character->x];
-                        moveDown(character);
-                        character->value1 = character->value2;
-                    }
-                }
-        
-            }
+            character->value2 = background[(character->y) + 1][character->x];
+            moveDown(character);
+            character->value1 = character->value2;
         }
+    }
+    else if (character->y > pacman_player.y)
+    {
+        if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
+        {
+            character->value2 = background[(character->y) + 1][character->x];
+            moveUp(character);
+            character->value1 = character->value2;
+        }
+    }
+    else
+    {
+        if (character->x < j)
+        {
+            /* code */
+        }
+
     }
 }
 
