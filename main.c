@@ -113,7 +113,7 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
-void startGame()
+void startGame() // funções para começar o jogo
 {
     defineBackground();
     circles();
@@ -124,6 +124,15 @@ void moveUp (Character* character)
 {
     if (background[(character->y) - 1][character->x] != 1)
     {
+        if (background[(character->y) - 1][character->x] == 2)
+        {
+            score++;
+        }
+        else if (background[(character->y) - 1][character->x] == 5)
+        {
+            score += 5;
+            // poder especial
+        }
         background[character->y][character->x] = 0;
         character->y--;
     }
@@ -133,6 +142,15 @@ void moveLeft (Character* character)
 {
     if (background[character->y][(character->x) - 1] != 1)
     {
+        if (background[character->y][(character->x) - 1] == 2)
+        {
+            score++;
+        }
+        else if (background[character->y][(character->x) - 1] == 5)
+        {
+            score += 5;
+            // poder especial
+        }
         background[character->y][character->x] = 0;
         character->x--;
     }
@@ -142,6 +160,15 @@ void moveDown (Character* character)
 {
     if (background[(character->y) + 1][character->x] != 1)
     {
+        if (background[(character->y) + 1][character->x] == 2)
+        {
+            score++;
+        }
+        else if (background[(character->y) + 1][character->x] == 5)
+        {
+            score += 5;
+            // poder especial
+        }
         background[character->y][character->x] = 0;
         character->y++;
     }
@@ -151,6 +178,15 @@ void moveRight (Character* character)
 {
     if (background[character->y][(character->x) + 1] != 1)
     {
+        if (background[character->y][(character->x) + 1] == 2)
+        {
+            score++;
+        }
+        else if (background[character->y][(character->x) + 1] == 5)
+        {
+            score += 5;
+            // poder especial
+        }
         background[character->y][character->x] = 0;
         character->x++;
     }
@@ -182,6 +218,11 @@ void commands(int input)
     {
         // Tecla espaço
     }
+}
+
+void gameOver()
+{
+    // GAMEOVER
 }
 
 void gameLoop()
@@ -219,7 +260,7 @@ void gameLoop()
             }
             printf("\n");
         }
-        printf("\n y: %i - x: %i", pacman_player.y, pacman_player.x);
+        printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
         
     }
 }
@@ -228,8 +269,10 @@ void gameLoop()
 
 int main(void)
 {
+    score = 0;
+    game_over = false;
+
     startGame();
-    
     gameLoop();
     
     return 0;
