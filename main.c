@@ -216,15 +216,21 @@ void ghostsMovements(Character* character)
     {
         if (character->x < pacman_player.x)
         {
-            character->value2 = background[character->y][(character->x) + 1];
-            moveRight(character);
-            character->value1 = character->value2;
+            if (background[character->y][(character->x) + 1] != 1 && background[character->y][(character->x) + 1] != 4)
+            {
+                character->value2 = background[character->y][(character->x) + 1];
+                moveRight(character);
+                character->value1 = character->value2;
+            }
         }
         else if (character->x > pacman_player.x)
         {
-            character->value2 = background[character->y][(character->x) - 1];
-            moveLeft(character);
-            character->value1 = character->value2;
+            if (background[character->y][(character->x) - 1] != 1 && background[character->y][(character->x) - 1] != 4)
+            {
+                character->value2 = background[character->y][(character->x) - 1];
+                moveRight(character);
+                character->value1 = character->value2;
+            }
         }
         else
         {
@@ -277,10 +283,10 @@ void gameLoop()
         ghost4.value1 = 0;
         
         commands(getInput());
-        // ghostsMovements(&ghost1);
-        // ghostsMovements(&ghost2);
-        // ghostsMovements(&ghost3);
-        // ghostsMovements(&ghost4);
+        ghostsMovements(&ghost1);
+        ghostsMovements(&ghost2);
+        ghostsMovements(&ghost3);
+        ghostsMovements(&ghost4);
 
         background[pacman_player.y][pacman_player.x] = 3;
         background[ghost1.y][ghost1.x] = 4;
@@ -288,7 +294,7 @@ void gameLoop()
         background[ghost3.y][ghost3.x] = 4;
         background[ghost4.y][ghost4.x] = 4;
 
-        system("clear");
+        system("cls");
         for (int i = 0; i < 20; i++)
         {
             for (int  j = 0; j < 20; j++)
