@@ -194,7 +194,6 @@ void moveRight (Character* character)
 
 void ghostsMovements(Character* character)
 {
-
     if (character->y < pacman_player.y)
     {
         if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
@@ -208,18 +207,29 @@ void ghostsMovements(Character* character)
     {
         if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
         {
-            character->value2 = background[(character->y) + 1][character->x];
+            character->value2 = background[(character->y) - 1][character->x];
             moveUp(character);
             character->value1 = character->value2;
         }
     }
     else
     {
-        if (character->x < j)
+        if (character->x < pacman_player.x)
         {
-            /* code */
+            character->value2 = background[character->y][(character->x) + 1];
+            moveRight(character);
+            character->value1 = character->value2;
         }
-
+        else if (character->x > pacman_player.x)
+        {
+            character->value2 = background[character->y][(character->x) - 1];
+            moveLeft(character);
+            character->value1 = character->value2;
+        }
+        else
+        {
+            // comeu o pacman
+        }
     }
 }
 
@@ -260,21 +270,25 @@ void gameLoop()
 {
     while (1)
     {
-        commands(getInput());
-
         pacman_player.value1 = 0;
         ghost1.value1 = 0;
         ghost3.value1 = 0;
         ghost3.value1 = 0;
         ghost4.value1 = 0;
         
+        commands(getInput());
+        // ghostsMovements(&ghost1);
+        // ghostsMovements(&ghost2);
+        // ghostsMovements(&ghost3);
+        // ghostsMovements(&ghost4);
+
         background[pacman_player.y][pacman_player.x] = 3;
         background[ghost1.y][ghost1.x] = 4;
         background[ghost2.y][ghost2.x] = 4;
         background[ghost3.y][ghost3.x] = 4;
         background[ghost4.y][ghost4.x] = 4;
 
-        system("cls");
+        system("clear");
         for (int i = 0; i < 20; i++)
         {
             for (int  j = 0; j < 20; j++)
