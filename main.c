@@ -4,17 +4,14 @@
 #include <stdbool.h>
 #include <conio.h>
 
-// #include "events.h"
-// #include "worldgen.h"
-
 typedef struct
 {
-    int x, y;
+    int x, y, value1, value2;
 } Character;
 
 char user_input;
 Character pacman_player, ghost1, ghost2, ghost3, ghost4;
-int background[20][20], score, value_ghost1, value_ghost2, value_ghost3, value_ghost4;
+int background[20][20], score;
 bool game_over;
 
 // FUNÇÕES ===============================================
@@ -136,7 +133,7 @@ void moveUp (Character* character)
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = 0;
+        background[character->y][character->x] = character->value1;
         character->y--;
     }
 }
@@ -154,7 +151,7 @@ void moveLeft (Character* character)
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = 0;
+        background[character->y][character->x] = character->value1;
         character->x--;
     }
 }
@@ -172,7 +169,7 @@ void moveDown (Character* character)
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = 0;
+        background[character->y][character->x] = character->value1;
         character->y++;
     }
 }
@@ -190,8 +187,31 @@ void moveRight (Character* character)
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = 0;
+        background[character->y][character->x] = character->value1;
         character->x++;
+    }
+}
+
+void ghostsMovements(Character* character)
+{
+    for (int i = 0; i < 20; i++)
+    {
+        for (int j = 0; j < 20; j++)
+        {
+            if (background[i][j] == 3)
+            {
+                if (character->y < i)
+                {
+                    if (background[(character->y) + 1][character->x] != 1)
+                    {
+                        character->value2 = background[(character->y) + 1][character->x];
+                        moveDown(character);
+                        character->value1 = character->value2;
+                    }
+                }
+        
+            }
+        }
     }
 }
 
@@ -233,6 +253,12 @@ void gameLoop()
     while (1)
     {
         commands(getInput());
+
+        pacman_player.value1 = 0;
+        ghost1.value1 = 0;
+        ghost3.value1 = 0;
+        ghost3.value1 = 0;
+        ghost4.value1 = 0;
         
         background[pacman_player.y][pacman_player.x] = 3;
         background[ghost1.y][ghost1.x] = 4;
