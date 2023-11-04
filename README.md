@@ -15,5 +15,5 @@ fantasmas = 4
 frutinhas = 5
 
 fundo = 199
-- pacman -fruit
+. - pacman -fruit
 = 197

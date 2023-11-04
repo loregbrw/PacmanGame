@@ -14,7 +14,7 @@ typedef struct
 
 char user_input;
 Character pacman_player, ghost1, ghost2, ghost3, ghost4;
-int background[20][20], score;
+int background[20][20], score, value_ghost1, value_ghost2, value_ghost3, value_ghost4;
 bool game_over;
 
 // FUNÇÕES ===============================================
@@ -38,7 +38,6 @@ void changePositions (Character* character, int new_y, int new_x) // definir a p
         character->x = new_x;
         character->y = new_y;
     }
-    
 }
 
 void defineBackground() // redefine o fundo para o padrão inicial
@@ -65,6 +64,10 @@ void defineBackground() // redefine o fundo para o padrão inicial
     fclose(matrix);
 
     changePositions(&pacman_player, 18, 1);
+    changePositions(&ghost1, 9, 9);
+    changePositions(&ghost2, 9, 10);
+    changePositions(&ghost3, 10, 9);
+    changePositions(&ghost4, 10, 10);
 }
 
 void circles() // coloca as bolinhas no labirinto
@@ -232,6 +235,11 @@ void gameLoop()
         commands(getInput());
         
         background[pacman_player.y][pacman_player.x] = 3;
+        background[ghost1.y][ghost1.x] = 4;
+        background[ghost2.y][ghost2.x] = 4;
+        background[ghost3.y][ghost3.x] = 4;
+        background[ghost4.y][ghost4.x] = 4;
+
         system("cls");
         for (int i = 0; i < 20; i++)
         {
@@ -251,7 +259,11 @@ void gameLoop()
                 }
                 else if (background[i][j] == 3)
                 {
-                    printf("X ");
+                    printf("C ");
+                }
+                else if (background[i][j] == 4)
+                {
+                    printf("W ");
                 }
                 else
                 {
