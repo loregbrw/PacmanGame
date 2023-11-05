@@ -205,7 +205,7 @@ void ghostsMovements(Character* character)
     }
     else if (character->y > pacman_player.y)
     {
-        if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
+        if (background[(character->y) - 1][character->x] != 1 && background[(character->y) - 1][character->x] != 4)
         {
             character->value2 = background[(character->y) - 1][character->x];
             moveUp(character);
