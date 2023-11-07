@@ -225,6 +225,45 @@ void gameOver()
     // GAMEOVER
 }
 
+void printWall(int x, int y) 
+{
+    int up = 0, down = 0, left = 0, right = 0;
+
+    if (x != 19)
+    {
+        if (background[y][x+1] == 1) {right = 1;}
+    }
+    if (x != 0)
+    {
+        if (background[y][x-1] == 1) {left = 1;}
+    }
+    if (y != 19)
+    {
+        if (background[y+1][x] == 1) {down = 1;}
+    }
+    if (y != 0)
+    {
+        if (background[y-1][x+1] == 1) {up = 1;}
+    }
+
+    if (left && right)
+    {
+        printf("%c%c", 205, 205);
+    } 
+    else if (up && down && right)
+    {
+        printf("%c%c", 204, 205);
+    }
+    else if (up || down)
+    {
+        printf("%c ", 186);
+    }
+    else
+    {
+        printf("o ");
+    }
+}
+
 void gameLoop()
 {
     while (1)
@@ -247,11 +286,15 @@ void gameLoop()
             {
                 if (background[i][j] == 5)
                 {
+                    FOREGROUND_COLOR(222, 7, 50);
                     printf("Y ");
+                    RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 2)
                 {
+                    FOREGROUND_COLOR(196, 173, 153);
                     printf(". ");
+                    RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 0)
                 {
@@ -259,20 +302,27 @@ void gameLoop()
                 }
                 else if (background[i][j] == 3)
                 {
-                    printf("C ");
+                    FOREGROUND_COLOR(250, 177, 7);
+                    printf("%c ", 157);
+                    RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 4)
                 {
+                    FOREGROUND_COLOR(50, 201, 68);
                     printf("W ");
+                    RESET_FOREGROUND();
                 }
                 else
                 {
-                    printf("o ");
+                    FOREGROUND_COLOR(5, 125, 245);
+                    printWall(j, i);
+                    RESET_FOREGROUND();
                 }
             }
             printf("\n");
         }
         printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+        ERASE_LEND();
 
         
     

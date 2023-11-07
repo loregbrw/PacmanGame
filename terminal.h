@@ -5,7 +5,10 @@
 #include <windows.h>
 #endif
 
+#include <stdlib.h>
+#include <locale.h>
 #include <stdio.h>
+#include <wchar.h>
 
 #define TERMINAL_PROCESSING 0x0004
 
