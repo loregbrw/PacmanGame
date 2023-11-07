@@ -1,1 +1,1 @@
-gcc -I. -o pacman.exe main.c terminal.c terminal.h
+gcc -I. -o pacman.exe background.c background.h events.c events.h

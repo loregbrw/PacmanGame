@@ -26,8 +26,3 @@ void startGame() // funções para começar o jogo
     circles();
     specialFruit();
 }
-
-void ghostsMovements(Character* character)
-{
-    // pathfinding
-}

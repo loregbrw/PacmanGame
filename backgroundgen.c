@@ -169,6 +169,11 @@ void moveRight (Character* character)
 
 // move ghosts ===============================================================
 
+int distanceCharacters(Character a, Character b) // retorna a distância entre dois characters
+{
+    return abs(a.x - b.x) + abs(a.y - b.y); // abs = valor absoluto
+}
+
 void ghostsMovements(Character* character)
 {
     // pathfinding
