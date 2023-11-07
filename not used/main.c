@@ -62,9 +62,9 @@ void defineBackground() // redefine o fundo para o padrão inicial
 
     changePositions(&pacman_player, 18, 1);
     changePositions(&ghost1, 9, 9);
-    // changePositions(&ghost2, 9, 10);
-    // changePositions(&ghost3, 10, 9);
-    // changePositions(&ghost4, 10, 10);
+    changePositions(&ghost2, 9, 10);
+    changePositions(&ghost3, 10, 9);
+    changePositions(&ghost4, 10, 10);
 }
 
 void circles() // coloca as bolinhas no labirinto
@@ -194,49 +194,7 @@ void moveRight (Character* character)
 
 void ghostsMovements(Character* character)
 {
-    if (character->y < pacman_player.y)
-    {
-        if (background[(character->y) + 1][character->x] != 1 && background[(character->y) + 1][character->x] != 4)
-        {
-            character->value2 = background[(character->y) + 1][character->x];
-            moveDown(character);
-            character->value1 = character->value2;
-        }
-    }
-    else if (character->y > pacman_player.y)
-    {
-        if (background[(character->y) - 1][character->x] != 1 && background[(character->y) - 1][character->x] != 4)
-        {
-            character->value2 = background[(character->y) - 1][character->x];
-            moveUp(character);
-            character->value1 = character->value2;
-        }
-    }
-    else
-    {
-        if (character->x < pacman_player.x)
-        {
-            if (background[character->y][(character->x) + 1] != 1 && background[character->y][(character->x) + 1] != 4)
-            {
-                character->value2 = background[character->y][(character->x) + 1];
-                moveRight(character);
-                character->value1 = character->value2;
-            }
-        }
-        else if (character->x > pacman_player.x)
-        {
-            if (background[character->y][(character->x) - 1] != 1 && background[character->y][(character->x) - 1] != 4)
-            {
-                character->value2 = background[character->y][(character->x) - 1];
-                moveRight(character);
-                character->value1 = character->value2;
-            }
-        }
-        else
-        {
-            // comeu o pacman
-        }
-    }
+    // pathfinding
 }
 
 void commands(int input)
@@ -277,10 +235,10 @@ void gameLoop()
     while (1)
     {
         pacman_player.value1 = 0;
-        ghost1.value1 = 0;
-        // ghost3.value1 = 0;
-        // ghost3.value1 = 0;
-        // ghost4.value1 = 0;
+        ghost1.value1 = 2;
+        // ghost3.value1 = 2;
+        // ghost3.value1 = 2;
+        // ghost4.value1 = 2;
         
         commands(getInput());
         ghostsMovements(&ghost1);
