@@ -265,14 +265,19 @@ void ghostsMovements(Character* ghost)
 
     Node_T * curr = &new_map[lasty][lastx];
 
-    // criar variavel para o fantasma andar
+    int x, y;
 
    while (1)
     {
         if (curr == curr->parent) {break;}
 
+        x = curr->x;
+        y = curr->y;
+
         curr = curr->parent;
-    } 
+    }
+
+    // guardar o valor da casa do pacman
 }
 
 // gameloop ==================================================================
