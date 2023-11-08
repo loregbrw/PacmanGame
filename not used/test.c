@@ -10,9 +10,9 @@ typedef struct
 typedef struct
 {
     int x,y;
-    struct Node* parent;
+    struct Node_T* parent;
     int g, h;
-} Node;
+} Node_T;
 
 int distanceCharacters(Character* a, Character* b) // retorna a distância entre dois characters
 {
@@ -77,11 +77,11 @@ findPath(int matrix[20][20], Node start, Node end)
                     openListSize++;
                 }
             }
-
+        }
 
     }
 
-
+    }
 
 }
 

@@ -5,7 +5,10 @@
 
 #include "backgroundgen.h"
 
-Character pacman_player, ghost1, ghost2, ghost3, ghost4;
+// Character pacman_player, ghost1, ghost2, ghost3, ghost4;
+Character pacman_player;
+Character ghosts[4];
+
 int background[20][20], score;
 
 void changePositions (Character* character, int new_y, int new_x) // definir a posição de um personagem
@@ -41,15 +44,15 @@ void defineBackground() // redefine o fundo para o padrão inicial
     fclose(matrix);
 
     changePositions(&pacman_player, 18, 1);
-    changePositions(&ghost1, 9, 9);
-    changePositions(&ghost2, 9, 10);
-    changePositions(&ghost3, 10, 9);
-    changePositions(&ghost4, 10, 10);
+    changePositions(&ghosts[0], 9, 10);
+    changePositions(&ghosts[1], 10, 9);
+    changePositions(&ghosts[2], 10, 10);
+    changePositions(&ghosts[3], 9, 9);
 }
 
 void circles() // coloca as bolinhas no labirinto
 {
-    for (int i = 0; i < 20; i++)
+    for (int i = 0; i < 20; i++) 
     {
         for (int j = 0; j < 20; j++)
         {
@@ -172,42 +175,23 @@ void moveRight (Character* character)
 typedef struct
 {
     int x,y;
-    struct Node* parent;
+    struct Node_T* parent;
     int g, h;
-} Node;
+} Node_T;
 
 int distanceCharacters(Character* a, Character* b) // retorna a distância entre dois characters
 {
     return abs(a->x - b->x) + abs(a->y - b->y); // abs = valor absoluto
 }
 
-findPath(int matrix[20][20], Node start, Node end)
+void findPath(Character* ghost)
 {
-    Node* openList[400];
-    int openListSize = 0;
-
-    bool closedList[20][20] = {0};
-
-    openList[0] = &start;
-    openListSize = 1;
-
-    while (openListSize > 0)
-    {
-        int currentIdx = 0;
-
-        for (int i = 1; i < openListSize; i++) {
-            if ((openList[i]->g + openList[i]->h) < (openList[currentIdx]->g + openList[currentIdx]->h))
-            {
-                currentIdx = i;
-            }
-    }
-
-    Node* current = openList[currentIdx];
+    
 }
 
 void ghostsMovements(Character* character)
 {
-    // pathfinding
+    
 }
 
 // gameloop ==================================================================

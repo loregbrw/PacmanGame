@@ -1,6 +1,7 @@
 #ifndef BACKGROUNDGEN_H
 #define BACKGROUNDGEN_H
 
+
 typedef struct
 {
     int x, y, value1, value2;
