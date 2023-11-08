@@ -44,7 +44,7 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int xd, int yd) {
     if (map[y][x].visited) {
         return false;
     }
-    
+
     if (y >= ROWS || x >= COLS || x < 0 || y < 0){
         return false;
     }
@@ -63,10 +63,7 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int xd, int yd) {
 
         return true;
     }
-
     
-
-
     map[y][x].visited = true;
     
     ox = x;

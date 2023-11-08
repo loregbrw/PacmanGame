@@ -5,6 +5,9 @@
 
 #include "backgroundgen.h"
 
+#define ROWS 20
+#define COLS 20
+
 // Character pacman_player, ghost1, ghost2, ghost3, ghost4;
 Character pacman_player;
 Character ghosts[4];
@@ -172,21 +175,75 @@ void moveRight (Character* character)
 
 // move ghosts ===============================================================
 
-typedef struct
+typedef struct Node
 {
     int x,y;
-    struct Node_T* parent;
-    int g, h;
+    bool visited;
+    int value;
+    struct Node* parent;
 } Node_T;
 
-int distanceCharacters(Character* a, Character* b) // retorna a distância entre dois characters
-{
-    return abs(a->x - b->x) + abs(a->y - b->y); // abs = valor absoluto
-}
+int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
-void findPath(Character* ghost)
-{
+bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
     
+    if (parent_x == -1) //Primeira execução
+    {
+        parent_x = x;
+    }
+    if (parent_y == -1)
+    {
+        parent_y = y;
+    }
+
+    if (map[y][x].visited)
+    {
+        return false;
+    }
+
+    if (y >= ROWS || x >= COLS || x < 0 || y < 0)
+    {
+        return false;
+    }
+
+    if (map[y][x].value == 1)
+    {
+        return false;
+    }
+
+    map[y][x].parent = &map[parent_y][parent_x];
+
+    if (x == x_destiny && y == y_destiny) //Encontrado
+    {
+        lastx = x; //Cordenadas destion/ultimo
+        lasty = y;
+
+        return true;
+    }
+    
+    map[y][x].visited = true;
+    
+    parent_x = x;
+    parent_y = y;
+
+    if (flood(map, x+1, y, x_destiny, y_destiny))
+    {        
+        return true;
+    }
+    if (flood(map, x, y+1, x_destiny, y_destiny))
+    {        
+        return true;
+    }
+    if (flood(map, x-1, y, x_destiny, y_destiny))
+    {        
+        return true;
+    }
+    if (flood(map, x, y-1, x_destiny, y_destiny))
+    {        
+        return true;
+    }
+
+    return false;
 }
 
 void ghostsMovements(Character* character)
@@ -226,25 +283,24 @@ void commands(int input)
 
 void gameLoop()
 {
+    for (int i = 0; i < 4; i++) {
+        ghosts[i].value1 = 2;
+    }
+    pacman_player.value1 = 0;
+
     while (1)
     {
-        pacman_player.value1 = 0;
-        ghost1.value1 = 2;
-        // ghost3.value1 = 2;
-        // ghost3.value1 = 2;
-        // ghost4.value1 = 2;
-        
         commands(getInput());
-        ghostsMovements(&ghost1);
-        // ghostsMovements(&ghost2);
-        // ghostsMovements(&ghost3);
-        // ghostsMovements(&ghost4);
+        for (int i = 0; i < 4; i++)
+        {
+            ghostsMovements(&ghosts[i]);
+        }
 
         background[pacman_player.y][pacman_player.x] = 3;
-        background[ghost1.y][ghost1.x] = 4;
-        // background[ghost2.y][ghost2.x] = 4;
-        // background[ghost3.y][ghost3.x] = 4;
-        // background[ghost4.y][ghost4.x] = 4;
+        for(int i = 0 ; i < 4; i++)
+        {
+            background[ghosts[i].y][ghosts[i].x] = 4;
+        }
 
         system("cls");
         for (int i = 0; i < 20; i++)
