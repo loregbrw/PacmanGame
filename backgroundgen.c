@@ -265,7 +265,14 @@ void ghostsMovements(Character* ghost)
 
     Node_T * curr = &new_map[lasty][lastx];
 
-    // falta o while!!!!!!!!
+    // criar variavel para o fantasma andar
+
+   while (1)
+    {
+        if (curr == curr->parent) {break;}
+
+        curr = curr->parent;
+    } 
 }
 
 // gameloop ==================================================================
