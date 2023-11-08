@@ -3,6 +3,8 @@
 #include <time.h>
 #include <stdbool.h>
 #include <conio.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 
 #include "terminal.h"
 
@@ -243,25 +245,81 @@ void printWall(int x, int y)
     }
     if (y != 0)
     {
-        if (background[y-1][x+1] == 1) {up = 1;}
+        if (background[y-1][x] == 1) {up = 1;}
     }
 
-    if (left && right)
-    {
-        printf("%c%c", 205, 205);
-    } 
-    else if (up && down && right)
+    // if (up && down && right && left)
+    // {
+    //     printf("%c", 206);
+    // }
+
+
+    if (up && down && right)
     {
         printf("%c%c", 204, 205);
+    }
+    else if (left && up && right)
+    {
+        printf("%c%c", 202, 205);
+    }
+    else if (left && down && right)
+    {
+        printf("%c%c", 203, 205);
+    }
+    else if (up && left && down)
+    {
+        printf("%c ", 185);
+    }
+    else if (up && right && down)
+    {
+        printf("%c%c", 204, 205);
+    }
+    else if (left && up)
+    {
+        printf("%c ", 188);
+    }
+    else if (left && down)
+    {
+        printf("%c ", 187);
+    }
+    else if (up && right)
+    {
+        printf("%c%c", 200, 205);
+    }
+    else if (right && down)
+    {
+        printf("%c%c", 201, 205);
     }
     else if (up || down)
     {
         printf("%c ", 186);
     }
-    else
+    else if (left || right)
+    {
+        if (left && !right)
+        {
+            printf("%c ", 205);
+        }
+        else
+        {
+            printf("%c%c", 205, 205);
+        }
+
+    }
+    // else if (left)
+    // {
+    //     printf("%c ", 205);
+    // }
+    // else if (right)
+    // {
+    //     printf("%c%c", 205);
+    // }
+    else 
     {
         printf("o ");
-    }
+    } 
+    
+    
 }
 
 void gameLoop()
@@ -287,13 +345,13 @@ void gameLoop()
                 if (background[i][j] == 5)
                 {
                     FOREGROUND_COLOR(222, 7, 50);
-                    printf("Y ");
+                    printf("%c ", 208);
                     RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 2)
                 {
                     FOREGROUND_COLOR(196, 173, 153);
-                    printf(". ");
+                    printf("%c ", 250);
                     RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 0)
@@ -303,7 +361,7 @@ void gameLoop()
                 else if (background[i][j] == 3)
                 {
                     FOREGROUND_COLOR(250, 177, 7);
-                    printf("%c ", 157);
+                    printf("C ");
                     RESET_FOREGROUND();
                 }
                 else if (background[i][j] == 4)
@@ -335,7 +393,8 @@ void gameLoop()
 int main(void)
 {
     configureTerminal();
-
+    
+    Mix_Music *musica = NULL;
     
     score = 0;
     game_over = false;

@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "terminal.h": "c"
+        "terminal.h": "c",
+        "sdl.h": "c",
+        "conio.h": "c"
     }
 }
