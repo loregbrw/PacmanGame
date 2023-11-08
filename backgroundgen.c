@@ -185,7 +185,7 @@ typedef struct Node
 
 int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
-bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
+bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
     
     if (parent_x == -1) //Primeira execução
     {
@@ -196,7 +196,7 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
         parent_y = y;
     }
 
-    if (map[y][x].visited)
+    if (background[y][x].visited)
     {
         return false;
     }
@@ -206,12 +206,12 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
         return false;
     }
 
-    if (map[y][x].value == 1)
+    if (background[y][x].value == 1)
     {
         return false;
     }
 
-    map[y][x].parent = &map[parent_y][parent_x];
+    background[y][x].parent = &background[parent_y][parent_x];
 
     if (x == x_destiny && y == y_destiny) //Encontrado
     {
@@ -221,24 +221,24 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
         return true;
     }
     
-    map[y][x].visited = true;
+    background[y][x].visited = true;
     
     parent_x = x;
     parent_y = y;
 
-    if (flood(map, x+1, y, x_destiny, y_destiny))
+    if (flood(background, x+1, y, x_destiny, y_destiny))
     {        
         return true;
     }
-    if (flood(map, x, y+1, x_destiny, y_destiny))
+    if (flood(background, x, y+1, x_destiny, y_destiny))
     {        
         return true;
     }
-    if (flood(map, x-1, y, x_destiny, y_destiny))
+    if (flood(background, x-1, y, x_destiny, y_destiny))
     {        
         return true;
     }
-    if (flood(map, x, y-1, x_destiny, y_destiny))
+    if (flood(background, x, y-1, x_destiny, y_destiny))
     {        
         return true;
     }
@@ -246,9 +246,26 @@ bool flood(Node_T map[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
     return false;
 }
 
-void ghostsMovements(Character* character)
+void ghostsMovements(Character* ghost)
 {
-    
+    Node_T new_map[ROWS][COLS];
+
+    for (int i = 0 ; i < ROWS; i++)
+    {
+        for (int j = 0 ; j < ROWS; j++)
+        {
+            new_map[i][j].x = j;
+            new_map[i][j].y = i;
+            new_map[i][j].value = background[i][j];
+            new_map[i][j].visited = false;
+        }
+    }
+
+    flood(new_map, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
+
+    Node_T * curr = &new_map[lasty][lastx];
+
+    // falta o while!!!!!!!!
 }
 
 // gameloop ==================================================================
