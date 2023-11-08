@@ -277,7 +277,12 @@ void ghostsMovements(Character* ghost)
         curr = curr->parent;
     }
 
-    // guardar o valor da casa do pacman
+    background[ghost->y][ghost->x] = ghost->value1;
+
+    ghost->x = x;
+    ghost->y = y;
+
+    // guardar o valor da casa do pacman na variavel!!!
 }
 
 // gameloop ==================================================================
