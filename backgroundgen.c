@@ -169,9 +169,40 @@ void moveRight (Character* character)
 
 // move ghosts ===============================================================
 
-int distanceCharacters(Character a, Character b) // retorna a distância entre dois characters
+typedef struct
 {
-    return abs(a.x - b.x) + abs(a.y - b.y); // abs = valor absoluto
+    int x,y;
+    struct Node* parent;
+    int g, h;
+} Node;
+
+int distanceCharacters(Character* a, Character* b) // retorna a distância entre dois characters
+{
+    return abs(a->x - b->x) + abs(a->y - b->y); // abs = valor absoluto
+}
+
+findPath(int matrix[20][20], Node start, Node end)
+{
+    Node* openList[400];
+    int openListSize = 0;
+
+    bool closedList[20][20] = {0};
+
+    openList[0] = &start;
+    openListSize = 1;
+
+    while (openListSize > 0)
+    {
+        int currentIdx = 0;
+
+        for (int i = 1; i < openListSize; i++) {
+            if ((openList[i]->g + openList[i]->h) < (openList[currentIdx]->g + openList[currentIdx]->h))
+            {
+                currentIdx = i;
+            }
+    }
+
+    Node* current = openList[currentIdx];
 }
 
 void ghostsMovements(Character* character)
