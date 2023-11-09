@@ -15,13 +15,20 @@ typedef struct
     int x, y, value1, value2;
 } Character;
 
+typedef struct
+{
+    int x, y;
+    bool eaten;
+} Fruit;
 
-// Character pacman_player, ghost1, ghost2, ghost3, ghost4;
+Fruit special_fruit, circles;
 Character pacman_player;
 Character ghosts[4];
+
 char user_input;
 bool game_over;
 
+int source[ROWS][COLS];
 int background[ROWS][COLS], score;
 
 int getInput() // pegar o input do usuario
@@ -45,9 +52,20 @@ void changePositions (Character* character, int new_y, int new_x) // definir a p
     }
 }
 
+void setBackround() {
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < ROWS; j++)
+        {
+            background[i][j] = source[i][j];
+        }
+    }
+
+}
+
 void defineBackground() // redefine o fundo para o padrão inicial
 {
-    FILE *matrix = fopen("../background.txt", "r");
+    FILE *matrix = fopen("./background.txt", "r");
 
     int line = 0, col = 0;
     char c;
@@ -64,9 +82,10 @@ void defineBackground() // redefine o fundo para o padrão inicial
             line++;
             continue;
         }
-        background[line][col++] = c - '0';
+        source[line][col++] = c - '0';
     }
     fclose(matrix);
+
 
     changePositions(&pacman_player, 18, 1);
     changePositions(&ghosts[0], 9, 10);
@@ -81,9 +100,9 @@ void circles() // coloca as bolinhas no labirinto
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (background[i][j] == 0)
+            if (source[i][j] == 0)
             {
-                background[i][j] = 2;
+                source[i][j] = 2;
             }
         }
     }
@@ -113,7 +132,8 @@ void specialFruit() // gera a frutinha especial
                 n--;
                 if (n == 0)
                 {
-                    background[i][j] = 5;
+                    special_fruit.x = i;
+                    special_fruit.y = i;
                     break;
                 }
             }
@@ -130,75 +150,75 @@ void startGame() // funções para começar o jogo
 
 // move character ============================================================
 
-void moveUp (Character* character) 
+void moveUp () 
 {
-    if (background[(character->y) - 1][character->x] != 1)
+    if (background[pacman_player.y - 1][pacman_player.x] != 1)
     {
-        if (background[(character->y) - 1][character->x] == 2)
+        if (background[pacman_player.y - 1][pacman_player.x] == 2)
         {
             score++;
         }
-        else if (background[(character->y) - 1][character->x] == 5)
+        else if (background[pacman_player.y - 1][pacman_player.x] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->y--;
+        source[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.y--;
     }
 }
 
-void moveLeft (Character* character)
+void moveLeft ()
 {
-    if (background[character->y][(character->x) - 1] != 1)
+    if (background[pacman_player.y][(pacman_player.x) - 1] != 1)
     {
-        if (background[character->y][(character->x) - 1] == 2)
+        if (background[pacman_player.y][pacman_player.x - 1] == 2)
         {
             score++;
         }
-        else if (background[character->y][(character->x) - 1] == 5)
+        else if (background[pacman_player.y][pacman_player.x - 1] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->x--;
+        source[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.x--;
     }
 }
 
-void moveDown (Character* character)
+void moveDown ()
 {
-    if (background[(character->y) + 1][character->x] != 1)
+    if (background[(pacman_player.y) + 1][pacman_player.x] != 1)
     {
-        if (background[(character->y) + 1][character->x] == 2)
+        if (background[pacman_player.y + 1][pacman_player.x] == 2)
         {
             score++;
         }
-        else if (background[(character->y) + 1][character->x] == 5)
+        else if (background[pacman_player.y + 1][pacman_player.x] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->y++;
+        source[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.y++;
     }
 }
 
-void moveRight (Character* character)
+void moveRight ()
 {
-    if (background[character->y][(character->x) + 1] != 1)
+    if (background[pacman_player.y][(pacman_player.x) + 1] != 1)
     {
-        if (background[character->y][(character->x) + 1] == 2)
+        if (background[pacman_player.y][pacman_player.x + 1] == 2)
         {
             score++;
         }
-        else if (background[character->y][(character->x) + 1] == 5)
+        else if (background[pacman_player.y][pacman_player.x + 1] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->x++;
+        source[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.x++;
     }
 }
 
@@ -225,15 +245,22 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
         parent_y = y;
     }
 
-    if (background[y][x].visited)
-    {
-        return false;
+    if(background == NULL) {
+        exit(-2);
     }
+
 
     if (y >= ROWS || x >= COLS || x < 0 || y < 0)
     {
         return false;
     }
+
+    
+    if (background[y][x].visited)
+    {
+        return false;
+    }
+    
 
     if (background[y][x].value == 1)
     {
@@ -290,21 +317,12 @@ void ghostsMovements(Character* ghost)
         }
     }
 
-    flood(new_map, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
+    bool result = flood(new_map, pacman_player.x, pacman_player.y, ghost->x, ghost->y);
 
-    Node_T * curr = &new_map[lasty][lastx];
+    Node_T* curr = &new_map[lasty][lastx];
 
-    int x, y;
+    int x = curr->parent->x, y = curr->parent->y;
 
-   while (1)
-    {
-        if (curr == curr->parent) {break;}
-
-        x = curr->x;
-        y = curr->y;
-
-        curr = curr->parent;
-    }
 
     background[ghost->y][ghost->x] = ghost->value1;
 
@@ -323,19 +341,19 @@ void commands(int input)
 {
     if (input == 119)
     {
-        moveUp(&pacman_player); // Tecla W, subir
+        moveUp(); // Tecla W, subir
     }
     else if (input == 97)
     {
-        moveLeft(&pacman_player); // Tecla A, esquerda
+        moveLeft(); // Tecla A, esquerda
     }
     else if (input == 115)
     {
-        moveDown(&pacman_player); // Tecla S, descer
+        moveDown(); // Tecla S, descer
     }
     else if (input == 100)
     {
-        moveRight(&pacman_player); // Tecla D, direita
+        moveRight(); // Tecla D, direita
     }
     else if (input == 13)
     {
@@ -352,16 +370,17 @@ void gameLoop()
     for (int i = 0; i < 4; i++) {
         ghosts[i].value1 = 2;
     }
-    pacman_player.value1 = 0;
 
     while (1)
     {
         commands(getInput());
 
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     ghostsMovements(&ghosts[i]);
-        // }
+        for (int i = 0; i < 4; i++)
+        {
+            ghostsMovements(&ghosts[i]);
+        }
+
+        // ghostsMovements(&ghosts[0]);
 
         background[pacman_player.y][pacman_player.x] = 3;
         for(int i = 0 ; i < 4; i++)

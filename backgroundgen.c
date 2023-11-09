@@ -275,8 +275,6 @@ void ghostsMovements(Character* ghost)
         x = curr->x;
         y = curr->y;
 
-        printf("x: %i y: %i", x, y);
-
         curr = curr->parent;
     }
 
@@ -331,10 +329,10 @@ void gameLoop()
     while (1)
     {
         commands(getInput());
-        // for (int i = 0; i < 4; i++)
-        // {
-        //     ghostsMovements(&ghosts[i]);
-        // }
+        for (int i = 0; i < 4; i++)
+        {
+            ghostsMovements(&ghosts[i]);
+        }
 
         background[pacman_player.y][pacman_player.x] = 3;
         for(int i = 0 ; i < 4; i++)
@@ -342,40 +340,38 @@ void gameLoop()
             background[ghosts[i].y][ghosts[i].x] = 4;
         }
 
-        ghostsMovements(&ghosts[0]);
-
-        // system("cls");
-        // for (int i = 0; i < ROWS; i++)
-        // {
-        //     for (int  j = 0; j < COLS; j++)
-        //     {
-        //         if (background[i][j] == 5)
-        //         {
-        //             printf("Y ");
-        //         }
-        //         else if (background[i][j] == 2)
-        //         {
-        //             printf(". ");
-        //         }
-        //         else if (background[i][j] == 0)
-        //         {
-        //             printf("  ");
-        //         }
-        //         else if (background[i][j] == 3)
-        //         {
-        //             printf("C ");
-        //         }
-        //         else if (background[i][j] == 4)
-        //         {
-        //             printf("W ");
-        //         }
-        //         else
-        //         {
-        //             printf("o ");
-        //         }
-        //     }
-        //     printf("\n");
-        // }
+        system("cls");
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int  j = 0; j < COLS; j++)
+            {
+                if (background[i][j] == 5)
+                {
+                    printf("Y ");
+                }
+                else if (background[i][j] == 2)
+                {
+                    printf(". ");
+                }
+                else if (background[i][j] == 0)
+                {
+                    printf("  ");
+                }
+                else if (background[i][j] == 3)
+                {
+                    printf("C ");
+                }
+                else if (background[i][j] == 4)
+                {
+                    printf("W ");
+                }
+                else
+                {
+                    printf("o ");
+                }
+            }
+            printf("\n");
+        }
         printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
         
     }
