@@ -102,75 +102,75 @@ void specialFruit() // gera a frutinha especial
 
 // move character ============================================================
 
-void moveUp (Character* character) 
+void moveUp () 
 {
-    if (background[(character->y) - 1][character->x] != 1)
+    if (background[pacman_player.y - 1][pacman_player.x] != 1)
     {
-        if (background[(character->y) - 1][character->x] == 2)
+        if (background[pacman_player.y - 1][pacman_player.x] == 2)
         {
             score++;
         }
-        else if (background[(character->y) - 1][character->x] == 5)
+        else if (background[pacman_player.y - 1][pacman_player.x] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->y--;
+        background[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.y--;
     }
 }
 
-void moveLeft (Character* character)
+void moveLeft ()
 {
-    if (background[character->y][(character->x) - 1] != 1)
+    if (background[pacman_player.y][(pacman_player.x) - 1] != 1)
     {
-        if (background[character->y][(character->x) - 1] == 2)
+        if (background[pacman_player.y][pacman_player.x - 1] == 2)
         {
             score++;
         }
-        else if (background[character->y][(character->x) - 1] == 5)
+        else if (background[pacman_player.y][pacman_player.x - 1] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->x--;
+        background[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.x--;
     }
 }
 
-void moveDown (Character* character)
+void moveDown ()
 {
-    if (background[(character->y) + 1][character->x] != 1)
+    if (background[(pacman_player.y) + 1][pacman_player.x] != 1)
     {
-        if (background[(character->y) + 1][character->x] == 2)
+        if (background[pacman_player.y + 1][pacman_player.x] == 2)
         {
             score++;
         }
-        else if (background[(character->y) + 1][character->x] == 5)
+        else if (background[pacman_player.y + 1][pacman_player.x] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->y++;
+        background[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.y++;
     }
 }
 
-void moveRight (Character* character)
+void moveRight ()
 {
-    if (background[character->y][(character->x) + 1] != 1)
+    if (background[pacman_player.y][(pacman_player.x) + 1] != 1)
     {
-        if (background[character->y][(character->x) + 1] == 2)
+        if (background[pacman_player.y][pacman_player.x + 1] == 2)
         {
             score++;
         }
-        else if (background[character->y][(character->x) + 1] == 5)
+        else if (background[pacman_player.y][pacman_player.x + 1] == 5)
         {
             score += 5;
             // poder especial
         }
-        background[character->y][character->x] = character->value1;
-        character->x++;
+        background[pacman_player.y][pacman_player.x] = 0;
+        pacman_player.x++;
     }
 }
 
@@ -275,6 +275,8 @@ void ghostsMovements(Character* ghost)
         x = curr->x;
         y = curr->y;
 
+        printf("x: %i y: %i", x, y);
+
         curr = curr->parent;
     }
 
@@ -295,19 +297,19 @@ void commands(int input)
 {
     if (input == 119)
     {
-        moveUp(&pacman_player); // Tecla W, subir
+        moveUp(); // Tecla W, subir
     }
     else if (input == 97)
     {
-        moveLeft(&pacman_player); // Tecla A, esquerda
+        moveLeft(); // Tecla A, esquerda
     }
     else if (input == 115)
     {
-        moveDown(&pacman_player); // Tecla S, descer
+        moveDown(); // Tecla S, descer
     }
     else if (input == 100)
     {
-        moveRight(&pacman_player); // Tecla D, direita
+        moveRight(); // Tecla D, direita
     }
     else if (input == 13)
     {
@@ -329,10 +331,10 @@ void gameLoop()
     while (1)
     {
         commands(getInput());
-        for (int i = 0; i < 4; i++)
-        {
-            ghostsMovements(&ghosts[i]);
-        }
+        // for (int i = 0; i < 4; i++)
+        // {
+        //     ghostsMovements(&ghosts[i]);
+        // }
 
         background[pacman_player.y][pacman_player.x] = 3;
         for(int i = 0 ; i < 4; i++)
@@ -340,38 +342,40 @@ void gameLoop()
             background[ghosts[i].y][ghosts[i].x] = 4;
         }
 
-        system("cls");
-        for (int i = 0; i < ROWS; i++)
-        {
-            for (int  j = 0; j < COLS; j++)
-            {
-                if (background[i][j] == 5)
-                {
-                    printf("Y ");
-                }
-                else if (background[i][j] == 2)
-                {
-                    printf(". ");
-                }
-                else if (background[i][j] == 0)
-                {
-                    printf("  ");
-                }
-                else if (background[i][j] == 3)
-                {
-                    printf("C ");
-                }
-                else if (background[i][j] == 4)
-                {
-                    printf("W ");
-                }
-                else
-                {
-                    printf("o ");
-                }
-            }
-            printf("\n");
-        }
+        ghostsMovements(&ghosts[0]);
+
+        // system("cls");
+        // for (int i = 0; i < ROWS; i++)
+        // {
+        //     for (int  j = 0; j < COLS; j++)
+        //     {
+        //         if (background[i][j] == 5)
+        //         {
+        //             printf("Y ");
+        //         }
+        //         else if (background[i][j] == 2)
+        //         {
+        //             printf(". ");
+        //         }
+        //         else if (background[i][j] == 0)
+        //         {
+        //             printf("  ");
+        //         }
+        //         else if (background[i][j] == 3)
+        //         {
+        //             printf("C ");
+        //         }
+        //         else if (background[i][j] == 4)
+        //         {
+        //             printf("W ");
+        //         }
+        //         else
+        //         {
+        //             printf("o ");
+        //         }
+        //     }
+        //     printf("\n");
+        // }
         printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
         
     }
