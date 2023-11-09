@@ -242,7 +242,6 @@ int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
 bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny)
 {
-    
     if (parent_x == -1) //Primeira execução
     {
         parent_x = x;
@@ -257,18 +256,15 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
         exit(-2);
     }
 
-
     if (y >= ROWS || x >= COLS || x < 0 || y < 0)
     {
         return false;
     }
-
     
     if (background[y][x].visited)
     {
         return false;
     }
-    
 
     if (background[y][x].value == 1)
     {
@@ -382,13 +378,13 @@ void gameLoop()
 
         commands(getInput());
 
-        // if (ticks % 5 == 0)
-        // {
-        //     for (int i = 0; i < 4; i++)
-        //     {
-        //         ghostsMovements(&ghosts[i]);
-        //     }
-        // }
+        if (ticks % 5 == 0)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                ghostsMovements(&ghosts[i]);
+            }
+        }
         
 
         // ghostsMovements(&ghosts[0]);
