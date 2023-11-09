@@ -2,18 +2,39 @@
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
+#include <conio.h>
 
-#include "backgroundgen.h"
-#include "events.h"
+// #include "backgroundgen.h"
+// #include "events.h"
 
 #define ROWS 20
 #define COLS 20
 
+typedef struct
+{
+    int x, y, value1, value2;
+} Character;
+
+
 // Character pacman_player, ghost1, ghost2, ghost3, ghost4;
 Character pacman_player;
 Character ghosts[4];
+char user_input;
+bool game_over;
 
 int background[ROWS][COLS], score;
+
+int getInput() // pegar o input do usuario
+{
+    if (_kbhit())
+    {
+        user_input = (char)_getch();
+
+        int int_input = (int)user_input;
+        return int_input;
+    }
+    return -1;
+}
 
 void changePositions (Character* character, int new_y, int new_x) // definir a posição de um personagem
 {
@@ -98,6 +119,13 @@ void specialFruit() // gera a frutinha especial
             }
         }
     }
+}
+
+void startGame() // funções para começar o jogo
+{
+    defineBackground();
+    circles();
+    specialFruit();
 }
 
 // move character ============================================================
@@ -329,10 +357,11 @@ void gameLoop()
     while (1)
     {
         commands(getInput());
-        for (int i = 0; i < 4; i++)
-        {
-            ghostsMovements(&ghosts[i]);
-        }
+
+        // for (int i = 0; i < 4; i++)
+        // {
+        //     ghostsMovements(&ghosts[i]);
+        // }
 
         background[pacman_player.y][pacman_player.x] = 3;
         for(int i = 0 ; i < 4; i++)
@@ -375,4 +404,10 @@ void gameLoop()
         printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
         
     }
+}
+
+int main (void)
+{
+    startGame();
+    gameLoop();
 }

@@ -4,5 +4,4 @@
 int getInput();
 void startGame();
 
-
 #endif

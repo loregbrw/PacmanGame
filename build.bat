@@ -1,1 +1,1 @@
-gcc -I. -o pacman.exe background.c background.h events.c events.h
+gcc -I. -o pacman.exe backgroundgen.c backgroundgen.h events.c events.h
