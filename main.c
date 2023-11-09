@@ -1,12 +1,16 @@
+#define MINIAUDIO_IMPLEMENTATION
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <stdbool.h>
 #include <conio.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_mixer.h>
+#include "miniaud.h"
 
 #include "terminal.h"
+
+ma_result result;
+ma_engine engine;
 
 typedef struct
 {
@@ -114,13 +118,6 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
-void startGame() // funções para começar o jogo
-{
-    defineBackground();
-    circles();
-    specialFruit();
-}
-
 void moveUp (Character* character) 
 {
     if (background[(character->y) - 1][character->x] != 1)
@@ -131,6 +128,7 @@ void moveUp (Character* character)
         }
         else if (background[(character->y) - 1][character->x] == 5)
         {
+            ma_engine_play_sound(&engine, "frutinha.mp3", NULL);
             score += 5;
             // poder especial
         }
@@ -149,6 +147,7 @@ void moveLeft (Character* character)
         }
         else if (background[character->y][(character->x) - 1] == 5)
         {
+            ma_engine_play_sound(&engine, "frutinha.mp3", NULL);
             score += 5;
             // poder especial
         }
@@ -167,6 +166,7 @@ void moveDown (Character* character)
         }
         else if (background[(character->y) + 1][character->x] == 5)
         {
+            ma_engine_play_sound(&engine, "frutinha.mp3", NULL);
             score += 5;
             // poder especial
         }
@@ -185,6 +185,7 @@ void moveRight (Character* character)
         }
         else if (background[character->y][(character->x) + 1] == 5)
         {
+            ma_engine_play_sound(&engine, "frutinha.mp3", NULL);
             score += 5;
             // poder especial
         }
@@ -196,21 +197,26 @@ void moveRight (Character* character)
 
 void commands(int input)
 {
+    
     if (input == 119)
     {
         moveUp(&pacman_player); // Tecla W, subir
+        
     }
     else if (input == 97)
     {
         moveLeft(&pacman_player); // Tecla A, esquerda
+
     }
     else if (input == 115)
     {
         moveDown(&pacman_player); // Tecla S, descer
+
     }
     else if (input == 100)
     {
         moveRight(&pacman_player); // Tecla D, direita
+
     }
     else if (input == 13)
     {
@@ -224,6 +230,7 @@ void commands(int input)
 
 void gameOver()
 {
+    // ma_engine_play_sound(&engine, "morte.mp3", NULL);
     // GAMEOVER
 }
 
@@ -322,85 +329,96 @@ void printWall(int x, int y)
     
 }
 
+void printMatrix()
+{
+    HIDE_CURSOR();
+    MOVE_HOME();
+
+    for (int i = 0; i < 20; i++)
+    {
+        for (int  j = 0; j < 20; j++)
+        {
+            if (background[i][j] == 5)
+            {
+                FOREGROUND_COLOR(222, 7, 50);
+                printf("%c ", 208);
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 2)
+            {
+                FOREGROUND_COLOR(196, 173, 153);
+                printf("%c ", 250);
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 0)
+            {
+                printf("  ");
+            }
+            else if (background[i][j] == 3)
+            {
+                FOREGROUND_COLOR(250, 177, 7);
+                printf("%c ", 0x0CA1);
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 4)
+            {
+                FOREGROUND_COLOR(50, 201, 68);
+                printf("W ");
+                RESET_FOREGROUND();
+            }
+            else
+            {
+                FOREGROUND_COLOR(5, 125, 245);
+                printWall(j, i);
+                RESET_FOREGROUND();
+            }
+        }
+        printf("\n");
+    }
+    printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+    ERASE_LEND();
+
+    fflush(stdout);        
+}
+
 void gameLoop()
 {
+    pacman_player.value1 = 0;
+
     while (1)
     {
-        pacman_player.value1 = 0;
-    
-        
         commands(getInput());
-    
-
         background[pacman_player.y][pacman_player.x] = 3;
-
-        
-
-        HIDE_CURSOR();
-        MOVE_HOME();
-        for (int i = 0; i < 20; i++)
-        {
-            for (int  j = 0; j < 20; j++)
-            {
-                if (background[i][j] == 5)
-                {
-                    FOREGROUND_COLOR(222, 7, 50);
-                    printf("%c ", 208);
-                    RESET_FOREGROUND();
-                }
-                else if (background[i][j] == 2)
-                {
-                    FOREGROUND_COLOR(196, 173, 153);
-                    printf("%c ", 250);
-                    RESET_FOREGROUND();
-                }
-                else if (background[i][j] == 0)
-                {
-                    printf("  ");
-                }
-                else if (background[i][j] == 3)
-                {
-                    FOREGROUND_COLOR(250, 177, 7);
-                    printf("C ");
-                    RESET_FOREGROUND();
-                }
-                else if (background[i][j] == 4)
-                {
-                    FOREGROUND_COLOR(50, 201, 68);
-                    printf("W ");
-                    RESET_FOREGROUND();
-                }
-                else
-                {
-                    FOREGROUND_COLOR(5, 125, 245);
-                    printWall(j, i);
-                    RESET_FOREGROUND();
-                }
-            }
-            printf("\n");
-        }
-        printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
-        ERASE_LEND();
-
-        
-    
-        fflush(stdout);        
+        printMatrix();
     }
 }
 
+void startGame() // funções para começar o jogo
+{
+    ma_engine_play_sound(&engine, "abertura.mp3", NULL);
+    
+    defineBackground();
+    circles();
+    specialFruit();
+    background[pacman_player.y][pacman_player.x] = 3;
+    printMatrix();
+    Sleep(5000);
+}
 // MAIN ===============================================
 
 int main(void)
 {
+    result = ma_engine_init(NULL, &engine);    
+
     configureTerminal();
-    
-    Mix_Music *musica = NULL;
     
     score = 0;
     game_over = false;
 
     startGame();
+    
     gameLoop();
     
+    ma_engine_uninit(&engine);
     return 0;
 }
