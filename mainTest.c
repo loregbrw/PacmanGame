@@ -3,6 +3,7 @@
 #include <time.h>
 #include <stdbool.h>
 #include <conio.h>
+#include <stdint.h>
 
 // #include "backgroundgen.h"
 // #include "events.h"
@@ -15,13 +16,7 @@ typedef struct
     int x, y, value1, value2;
 } Character;
 
-typedef struct
-{
-    int x, y;
-    bool eaten;
-} Fruit;
 
-Fruit special_fruit, circles;
 Character pacman_player;
 Character ghosts[4];
 
@@ -132,8 +127,7 @@ void specialFruit() // gera a frutinha especial
                 n--;
                 if (n == 0)
                 {
-                    special_fruit.x = i;
-                    special_fruit.y = i;
+                    source[i][j];
                     break;
                 }
             }
@@ -146,6 +140,18 @@ void startGame() // funções para começar o jogo
     defineBackground();
     circles();
     specialFruit();
+}
+
+void redefineBackground()
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+            background[i][j] = source[i][j];
+        }
+    }
+    
 }
 
 // move character ============================================================
@@ -234,7 +240,8 @@ typedef struct Node
 
 int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
-bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny) {
+bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny)
+{
     
     if (parent_x == -1) //Primeira execução
     {
@@ -245,7 +252,8 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
         parent_y = y;
     }
 
-    if(background == NULL) {
+    if(background == NULL)
+    {
         exit(-2);
     }
 
@@ -321,16 +329,11 @@ void ghostsMovements(Character* ghost)
 
     Node_T* curr = &new_map[lasty][lastx];
 
-    int x = curr->parent->x, y = curr->parent->y;
+    int x = curr->parent->x;
+    int y = curr->parent->y;
 
-
-    background[ghost->y][ghost->x] = ghost->value1;
-
-    ghost->value2 = background[y][x];
-    background[ghost->y][ghost->x] = ghost->value1;
     ghost->x = x;
     ghost->y = y;
-    ghost->value1 = ghost->value2;
 
     // guardar o valor da casa do pacman na variavel!!!
 }
@@ -371,16 +374,26 @@ void gameLoop()
         ghosts[i].value1 = 2;
     }
 
+    uint64_t ticks = 0;
+
     while (1)
     {
+        ticks++;
+
         commands(getInput());
 
-        for (int i = 0; i < 4; i++)
+        if (ticks % 5 == 0)
         {
-            ghostsMovements(&ghosts[i]);
+            for (int i = 0; i < 1; i++)
+            {
+                ghostsMovements(&ghosts[i]);
+            }
         }
+        
 
         // ghostsMovements(&ghosts[0]);
+
+        redefineBackground();
 
         background[pacman_player.y][pacman_player.x] = 3;
         for(int i = 0 ; i < 4; i++)
