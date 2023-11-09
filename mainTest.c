@@ -60,7 +60,7 @@ void setBackround() {
 
 void defineBackground() // redefine o fundo para o padrão inicial
 {
-    FILE *matrix = fopen("./background.txt", "r");
+    FILE *matrix = fopen("../background.txt", "r");
 
     int line = 0, col = 0;
     char c;
@@ -110,7 +110,7 @@ void specialFruit() // gera a frutinha especial
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (background[i][j] == 2)
+            if (source[i][j] == 2)
             {
                 position++;
             }
@@ -122,12 +122,12 @@ void specialFruit() // gera a frutinha especial
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (background[i][j] == 2)
+            if (source[i][j] == 2)
             {
                 n--;
                 if (n == 0)
                 {
-                    source[i][j];
+                    source[i][j] = 5;
                     break;
                 }
             }
@@ -325,7 +325,7 @@ void ghostsMovements(Character* ghost)
         }
     }
 
-    bool result = flood(new_map, pacman_player.x, pacman_player.y, ghost->x, ghost->y);
+    flood(new_map, pacman_player.x, pacman_player.y, ghost->x, ghost->y);
 
     Node_T* curr = &new_map[lasty][lastx];
 
@@ -382,13 +382,13 @@ void gameLoop()
 
         commands(getInput());
 
-        if (ticks % 5 == 0)
-        {
-            for (int i = 0; i < 1; i++)
-            {
-                ghostsMovements(&ghosts[i]);
-            }
-        }
+        // if (ticks % 5 == 0)
+        // {
+        //     for (int i = 0; i < 4; i++)
+        //     {
+        //         ghostsMovements(&ghosts[i]);
+        //     }
+        // }
         
 
         // ghostsMovements(&ghosts[0]);
