@@ -19,7 +19,7 @@ typedef struct
 
 char user_input;
 Character pacman_player, ghost1, ghost2, ghost3, ghost4;
-int background[20][20], score;
+int background[20][20], game_over_background[20][20], score;
 bool game_over;
 
 // FUNÇÕES ===============================================
@@ -70,6 +70,30 @@ void defineBackground() // redefine o fundo para o padrão inicial
 
     changePositions(&pacman_player, 18, 1);
     
+}
+
+void defineGameOver() // redefine o fundo para a tela de game over
+{
+    FILE *matrix = fopen("./game_over.txt", "r");
+
+    int line = 0, col = 0;
+    char c;
+
+    while ((c = fgetc(matrix)) != EOF)
+    {
+        if (c == '\r')
+        {
+            continue;
+        }
+        if (c == '\n')
+        {
+            col = 0;
+            line++;
+            continue;
+        }
+        game_over_background[line][col++] = c - '0';
+    }
+    fclose(matrix);
 }
 
 void circles() // coloca as bolinhas no labirinto
@@ -357,7 +381,7 @@ void printMatrix()
             else if (background[i][j] == 3)
             {
                 FOREGROUND_COLOR(250, 177, 7);
-                printf("%c ", 0x0CA1);
+                printf("C ");
                 RESET_FOREGROUND();
             }
             else if (background[i][j] == 4)
