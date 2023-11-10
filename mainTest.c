@@ -11,8 +11,18 @@
 #define ROWS 20
 #define COLS 20
 
+typedef struct Node
+{
+    int x,y;
+    bool visited;
+    int value;
+    struct Node* parent;
+} Node_T;
+
 typedef struct
 {
+    bool recalculate;
+    Node_T route[ROWS][COLS];
     int x, y, value1, value2;
 } Character;
 
@@ -60,7 +70,7 @@ void setBackround() {
 
 void defineBackground() // redefine o fundo para o padrão inicial
 {
-    FILE *matrix = fopen("../background.txt", "r");
+    FILE *matrix = fopen("./background.txt", "r");
 
     int line = 0, col = 0;
     char c;
@@ -140,6 +150,11 @@ void startGame() // funções para começar o jogo
     defineBackground();
     circles();
     specialFruit();
+
+
+    for(int i = 0; i <4; i++){
+        ghosts[i].recalculate = true;
+    }
 }
 
 void redefineBackground()
@@ -230,16 +245,9 @@ void moveRight ()
 
 // move ghosts ===============================================================
 
-typedef struct Node
-{
-    int x,y;
-    bool visited;
-    int value;
-    struct Node* parent;
-} Node_T;
+bool recalculate = true;
 
 int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
-
 bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny)
 {
     if (parent_x == -1) //Primeira execução
@@ -306,27 +314,48 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
     return false;
 }
 
+
+
 void ghostsMovements(Character* ghost)
 {
-    Node_T new_map[ROWS][COLS];
 
     for (int i = 0 ; i < ROWS; i++)
     {
         for (int j = 0 ; j < ROWS; j++)
         {
-            new_map[i][j].x = j;
-            new_map[i][j].y = i;
-            new_map[i][j].value = background[i][j];
-            new_map[i][j].visited = false;
+            ghost->route[i][j].x = j;
+            ghost->route[i][j].y = i;
+            ghost->route[i][j].value = background[i][j];
+            ghost->route[i][j].visited = false;
         }
     }
 
-    flood(new_map, pacman_player.x, pacman_player.y, ghost->x, ghost->y);
+    
+    if (ghost->recalculate) {
+        parent_x = -1;
+        parent_y = -1;
+        lastx = -1;
+        lasty = -1;
+        // flood(ghost->route, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
+        flood(ghost->route, pacman_player.x, pacman_player.y,  ghost->x, ghost->y);
+        ghost->recalculate = false;
+    }
 
-    Node_T* curr = &new_map[lasty][lastx];
+    Node_T* curr = &ghost->route[lasty][lastx];
 
-    int x = curr->parent->x;
-    int y = curr->parent->y;
+    while (true)
+    {
+        
+        if (curr->parent->x == ghost->x && curr->parent->y == ghost->y)
+        {
+            break;
+        }
+
+        curr = curr->parent;
+    }
+
+    int x = curr->x;
+    int y = curr->y;
 
     ghost->x = x;
     ghost->y = y;
@@ -340,18 +369,30 @@ void commands(int input)
 {
     if (input == 119)
     {
+        for(int i = 0; i <4; i++){
+            ghosts[i].recalculate = true;
+        }
         moveUp(); // Tecla W, subir
     }
     else if (input == 97)
     {
+        for(int i = 0; i <4; i++){
+            ghosts[i].recalculate = true;
+        }
         moveLeft(); // Tecla A, esquerda
     }
     else if (input == 115)
     {
+        for(int i = 0; i <4; i++){
+            ghosts[i].recalculate = true;
+        }
         moveDown(); // Tecla S, descer
     }
     else if (input == 100)
     {
+        for(int i = 0; i <4; i++){
+            ghosts[i].recalculate = true;
+        }
         moveRight(); // Tecla D, direita
     }
     else if (input == 13)
@@ -378,7 +419,7 @@ void gameLoop()
 
         commands(getInput());
 
-        if (ticks % 5 == 0)
+        if (ticks % 10== 0)
         {
             for (int i = 0; i < 4; i++)
             {
