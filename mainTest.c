@@ -336,8 +336,7 @@ void ghostsMovements(Character* ghost)
         parent_y = -1;
         lastx = -1;
         lasty = -1;
-        // flood(ghost->route, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
-        flood(ghost->route, pacman_player.x, pacman_player.y,  ghost->x, ghost->y);
+        flood(ghost->route, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
         ghost->recalculate = false;
     }
 
@@ -356,7 +355,7 @@ void ghostsMovements(Character* ghost)
 
     int x = curr->x;
     int y = curr->y;
-
+    
     ghost->x = x;
     ghost->y = y;
 
