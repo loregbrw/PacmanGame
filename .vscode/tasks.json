@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "tasks": [
         {
             "type": "cppbuild",
@@ -25,4 +26,25 @@
         }
     ],
     "version": "2.0.0"
+=======
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "build",
+			"command": "cmd /C build.bat",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"detail": "compilador: C:\\MinGW\\bin\\gcc.exe"
+		}
+	]
+>>>>>>> feat-gabi
 }

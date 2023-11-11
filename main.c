@@ -1,3 +1,5 @@
+#define MINIAUDIO_IMPLEMENTATION
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -5,8 +7,10 @@
 #include <conio.h>
 #include <stdint.h>
 
-// #include "backgroundgen.h"
-// #include "events.h"
+#include "miniaud.h"
+#include "terminal.h"
+
+// =======================================================
 
 #define ROWS 20
 #define COLS 20
@@ -33,8 +37,15 @@ Character ghosts[4];
 char user_input;
 bool game_over;
 
+ma_result result;
+ma_engine engine;
+
 int source[ROWS][COLS];
-int background[ROWS][COLS], score;
+int background[ROWS][COLS], game_over_background[ROWS][COLS], score;
+
+
+// FUNÇÕES ===============================================
+
 
 int getInput() // pegar o input do usuario
 {
@@ -48,7 +59,7 @@ int getInput() // pegar o input do usuario
     return -1;
 }
 
-void changePositions (Character* character, int new_y, int new_x) // definir a posição de um personagem
+void changePositions(Character* character, int new_y, int new_x) // definir a posição de um personagem
 {
     if (background[new_y][new_x] != 1)
     {
@@ -57,7 +68,8 @@ void changePositions (Character* character, int new_y, int new_x) // definir a p
     }
 }
 
-void setBackround() {
+void setBackround() // redefinir o background todo loop
+{
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < ROWS; j++)
@@ -65,7 +77,6 @@ void setBackround() {
             background[i][j] = source[i][j];
         }
     }
-
 }
 
 void defineBackground() // redefine o fundo para o padrão inicial
@@ -99,6 +110,30 @@ void defineBackground() // redefine o fundo para o padrão inicial
     changePositions(&ghosts[3], 9, 9);
 }
 
+void defineGameOver() // redefine o fundo para a tela de game over
+{
+    FILE *matrix = fopen("./game_over.txt", "r");
+
+    int line = 0, col = 0;
+    char c;
+
+    while ((c = fgetc(matrix)) != EOF)
+    {
+        if (c == '\r')
+        {
+            continue;
+        }
+        if (c == '\n')
+        {
+            col = 0;
+            line++;
+            continue;
+        }
+        game_over_background[line][col++] = c - '0';
+    }
+    fclose(matrix);
+}
+
 void circles() // coloca as bolinhas no labirinto
 {
     for (int i = 0; i < ROWS; i++) 
@@ -108,6 +143,7 @@ void circles() // coloca as bolinhas no labirinto
             if (source[i][j] == 0)
             {
                 source[i][j] = 2;
+
             }
         }
     }
@@ -116,11 +152,13 @@ void circles() // coloca as bolinhas no labirinto
 void specialFruit() // gera a frutinha especial
 {
     int position = 0, n;
+
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
             if (source[i][j] == 2)
+
             {
                 position++;
             }
@@ -133,11 +171,13 @@ void specialFruit() // gera a frutinha especial
         for (int j = 0; j < COLS; j++)
         {
             if (source[i][j] == 2)
+
             {
                 n--;
                 if (n == 0)
                 {
                     source[i][j] = 5;
+
                     break;
                 }
             }
@@ -169,7 +209,9 @@ void redefineBackground()
     
 }
 
+
 // move character ============================================================
+
 
 void moveUp () 
 {
@@ -243,7 +285,9 @@ void moveRight ()
     }
 }
 
+
 // move ghosts ===============================================================
+
 
 bool recalculate = true;
 
@@ -313,8 +357,6 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
 
     return false;
 }
-
-
 
 void ghostsMovements(Character* ghost)
 {
@@ -404,9 +446,146 @@ void commands(int input)
     }
 }
 
+void gameOver()
+{
+    // ma_engine_play_sound(&engine, "morte.mp3", NULL);
+    // GAMEOVER
+}
+
+void printWall(int x, int y) 
+{
+    int up = 0, down = 0, left = 0, right = 0;
+
+    if (x != 19)
+    {
+        if (background[y][x+1] == 1) {right = 1;}
+    }
+    if (x != 0)
+    {
+        if (background[y][x-1] == 1) {left = 1;}
+    }
+    if (y != 19)
+    {
+        if (background[y+1][x] == 1) {down = 1;}
+    }
+    if (y != 0)
+    {
+        if (background[y-1][x] == 1) {up = 1;}
+    }
+
+    if (up && down && right)
+    {
+        printf("%c%c", 204, 205);
+    }
+    else if (left && up && right)
+    {
+        printf("%c%c", 202, 205);
+    }
+    else if (left && down && right)
+    {
+        printf("%c%c", 203, 205);
+    }
+    else if (up && left && down)
+    {
+        printf("%c ", 185);
+    }
+    else if (up && right && down)
+    {
+        printf("%c%c", 204, 205);
+    }
+    else if (left && up)
+    {
+        printf("%c ", 188);
+    }
+    else if (left && down)
+    {
+        printf("%c ", 187);
+    }
+    else if (up && right)
+    {
+        printf("%c%c", 200, 205);
+    }
+    else if (right && down)
+    {
+        printf("%c%c", 201, 205);
+    }
+    else if (up || down)
+    {
+        printf("%c ", 186);
+    }
+    else if (left || right)
+    {
+        if (left && !right)
+        {
+            printf("%c ", 205);
+        }
+        else
+        {
+            printf("%c%c", 205, 205);
+        }
+    }
+    else 
+    {
+        printf("o ");
+    }
+}
+
+void printMatrix()
+{
+    HIDE_CURSOR();
+    MOVE_HOME();
+
+    for (int i = 0; i < 20; i++)
+    {
+        for (int  j = 0; j < 20; j++)
+        {
+            if (background[i][j] == 5)
+            {
+                FOREGROUND_COLOR(222, 7, 50);
+                printf("%c ", 208);
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 2)
+            {
+                FOREGROUND_COLOR(196, 173, 153);
+                printf("%c ", 250);
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 0)
+            {
+                printf("  ");
+            }
+            else if (background[i][j] == 3)
+            {
+                FOREGROUND_COLOR(250, 177, 7);
+                printf("C ");
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 4)
+            {
+                FOREGROUND_COLOR(50, 201, 68);
+                printf("W ");
+                RESET_FOREGROUND();
+            }
+            else
+            {
+                FOREGROUND_COLOR(5, 125, 245);
+                printWall(j, i);
+                RESET_FOREGROUND();
+            }
+        }
+        printf("\n");
+    }
+    printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+    ERASE_LEND();
+
+    fflush(stdout);        
+}
+
 void gameLoop()
 {
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 4; i++)
+    {
         ghosts[i].value1 = 2;
     }
 
@@ -415,7 +594,6 @@ void gameLoop()
     while (1)
     {
         ticks++;
-
         commands(getInput());
 
         if (ticks % 10== 0)
@@ -425,9 +603,6 @@ void gameLoop()
                 ghostsMovements(&ghosts[i]);
             }
         }
-        
-
-        // ghostsMovements(&ghosts[0]);
 
         redefineBackground();
 
@@ -436,46 +611,40 @@ void gameLoop()
         {
             background[ghosts[i].y][ghosts[i].x] = 4;
         }
-
-        system("cls");
-        for (int i = 0; i < ROWS; i++)
-        {
-            for (int  j = 0; j < COLS; j++)
-            {
-                if (background[i][j] == 5)
-                {
-                    printf("Y ");
-                }
-                else if (background[i][j] == 2)
-                {
-                    printf(". ");
-                }
-                else if (background[i][j] == 0)
-                {
-                    printf("  ");
-                }
-                else if (background[i][j] == 3)
-                {
-                    printf("C ");
-                }
-                else if (background[i][j] == 4)
-                {
-                    printf("W ");
-                }
-                else
-                {
-                    printf("o ");
-                }
-            }
-            printf("\n");
-        }
-        printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
         
+        printMatrix();
     }
 }
 
-int main (void)
+void startGame() // funções para começar o jogo
 {
+    ma_engine_play_sound(&engine, "abertura.mp3", NULL);
+    
+    defineBackground();
+    circles();
+    specialFruit();
+    background[pacman_player.y][pacman_player.x] = 3;
+    printMatrix();
+    Sleep(5000);
+}
+
+
+// MAIN ===============================================
+
+
+int main(void)
+{
+    result = ma_engine_init(NULL, &engine);    
+
+    configureTerminal();
+    
+    score = 0;
+    game_over = false;
+
     startGame();
+    
     gameLoop();
+    
+    ma_engine_uninit(&engine);
+    return 0;
 }

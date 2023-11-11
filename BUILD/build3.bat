@@ -1,0 +1,1 @@
+gcc -g -I. terminal.c terminal.h miniaud.h print_animacao.c -o gameover.exe 
