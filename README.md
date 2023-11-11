@@ -1,8 +1,8 @@
 # PacmanGame
 
-<<<<<<< HEAD
+
 Recriação do jogo do Pacman utilizando a linguagem C
-=======
+
 w = 119
 a = 97
 s = 115
