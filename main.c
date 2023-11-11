@@ -185,18 +185,6 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
-void startGame() // funções para começar o jogo
-{
-    defineBackground();
-    circles();
-    specialFruit();
-
-
-    for(int i = 0; i <4; i++){
-        ghosts[i].recalculate = true;
-    }
-}
-
 void redefineBackground()
 {
     for (int i = 0; i < ROWS; i++)
@@ -623,7 +611,11 @@ void startGame() // funções para começar o jogo
     defineBackground();
     circles();
     specialFruit();
-    background[pacman_player.y][pacman_player.x] = 3;
+
+    for(int i = 0; i <4; i++){
+        ghosts[i].recalculate = true;
+    }
+    
     printMatrix();
     Sleep(5000);
 }

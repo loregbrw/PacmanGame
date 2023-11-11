@@ -20,4 +20,3 @@ frutinhas = 5
 fundo = 199
 . - pacman -fruit
 = 197
->>>>>>> feat-gabi
