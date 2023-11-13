@@ -346,7 +346,7 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
     return false;
 }
 
-void ghostsMovements(Character* ghost)
+void ghostsMovements(Character* ghost, int dx, int dy)
 {
 
     for (int i = 0 ; i < ROWS; i++)
@@ -366,7 +366,7 @@ void ghostsMovements(Character* ghost)
         parent_y = -1;
         lastx = -1;
         lasty = -1;
-        flood(ghost->route, ghost->x, ghost->y, pacman_player.x, pacman_player.y);
+        flood(ghost->route, ghost->x, ghost->y, dx, dy);
         ghost->recalculate = false;
     }
 
@@ -374,6 +374,9 @@ void ghostsMovements(Character* ghost)
 
     while (true)
     {
+        if(!curr || !curr->parent) {
+            return;
+        }
         
         if (curr->parent->x == ghost->x && curr->parent->y == ghost->y)
         {
@@ -461,61 +464,34 @@ void printWall(int x, int y)
         if (background[y-1][x] == 1) {up = 1;}
     }
 
-    if (up && down && right)
-    {
-        printf("%c%c", 204, 205);
-    }
-    else if (left && up && right)
-    {
-        printf("%c%c", 202, 205);
-    }
-    else if (left && down && right)
-    {
-        printf("%c%c", 203, 205);
-    }
-    else if (up && left && down)
-    {
-        printf("%c ", 185);
-    }
-    else if (up && right && down)
-    {
-        printf("%c%c", 204, 205);
-    }
-    else if (left && up)
-    {
-        printf("%c ", 188);
-    }
-    else if (left && down)
-    {
-        printf("%c ", 187);
-    }
-    else if (up && right)
-    {
-        printf("%c%c", 200, 205);
-    }
-    else if (right && down)
-    {
-        printf("%c%c", 201, 205);
-    }
-    else if (up || down)
-    {
-        printf("%c ", 186);
-    }
+    if (up && down && right) {printf("%c%c", 204, 205);}
+
+    else if (left && up && right) {printf("%c%c", 202, 205);}
+
+    else if (left && down && right) {printf("%c%c", 203, 205);}
+
+    else if (up && left && down) {printf("%c ", 185);}
+
+    else if (up && right && down) {printf("%c%c", 204, 205);}
+
+    else if (left && up) {printf("%c ", 188);}
+
+    else if (left && down) {printf("%c ", 187);}
+
+    else if (up && right) {printf("%c%c", 200, 205);}
+
+    else if (right && down) {printf("%c%c", 201, 205);}
+
+    else if (up || down) {printf("%c ", 186);}
+
     else if (left || right)
     {
-        if (left && !right)
-        {
-            printf("%c ", 205);
-        }
-        else
-        {
-            printf("%c%c", 205, 205);
-        }
+        if (left && !right) {printf("%c ", 205);}
+
+        else {printf("%c%c", 205, 205);}
     }
-    else 
-    {
-        printf("o ");
-    }
+
+    else {printf("o ");}
 }
 
 void printMatrix()
@@ -577,6 +553,9 @@ void gameLoop()
         ghosts[i].value1 = 2;
     }
 
+    time_t first_seconds;
+    first_seconds = time(NULL);
+
     uint64_t ticks = 0;
 
     while (1)
@@ -584,11 +563,23 @@ void gameLoop()
         ticks++;
         commands(getInput());
 
-        if (ticks % 10== 0)
+        time_t curr_time = time(NULL) - first_seconds;
+
+        if (ticks % 50== 0)
         {
-            for (int i = 0; i < 4; i++)
+            if (curr_time >= 5)
             {
-                ghostsMovements(&ghosts[i]);
+                for (int i = 0; i < 4; i++)
+                {
+                    ghostsMovements(&ghosts[i], pacman_player.x, pacman_player.y);
+                }
+            }
+            else
+            {
+                ghostsMovements(&ghosts[0], 18, 1);
+                ghostsMovements(&ghosts[1], 1, 18);
+                ghostsMovements(&ghosts[2], 18, 18);
+                ghostsMovements(&ghosts[3], 1, 1);
             }
         }
 
@@ -617,7 +608,7 @@ void startGame() // funções para começar o jogo
     }
     
     printMatrix();
-    Sleep(5000);
+    // Sleep(5000);
 }
 
 
