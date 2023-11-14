@@ -10,7 +10,9 @@
 #include "miniaud.h"
 #include "terminal.h"
 
+
 // =======================================================
+
 
 #define ROWS 20
 #define COLS 20
@@ -30,24 +32,23 @@ typedef struct
     int x, y, value1, value2;
 } Character;
 
-
 Character pacman_player;
 Character ghosts[4];
 
 char user_input;
-bool game_over;
+bool game_over, recalculate = true;
 
 ma_result result;
 ma_engine engine;
 
-int source[ROWS][COLS];
-int background[ROWS][COLS], game_over_background[ROWS][COLS], score;
+int source[ROWS][COLS], background[ROWS][COLS], game_over[ROWS][COLS], score;
+int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
 
-// FUNÇÕES ===============================================
+// FUNCTIONS =============================================
 
 
-int getInput() // pegar o input do usuario
+int getInput() //constantly gets the user input
 {
     if (_kbhit())
     {
@@ -59,7 +60,7 @@ int getInput() // pegar o input do usuario
     return -1;
 }
 
-void changePositions(Character* character, int new_y, int new_x) // definir a posição de um personagem
+void changePositions(Character* character, int new_y, int new_x) //defines a character's position
 {
     if (background[new_y][new_x] != 1)
     {
@@ -68,7 +69,18 @@ void changePositions(Character* character, int new_y, int new_x) // definir a po
     }
 }
 
-void defineBackground() // redefine o fundo para o padrão inicial
+void redefineBackground() //resets the background
+{
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < ROWS; j++)
+        {
+            background[i][j] = source[i][j];
+        }
+    }
+}
+
+void defineBackground() //resets the matrix to initial default
 {
     FILE *matrix = fopen("./background.txt", "r");
 
@@ -91,7 +103,6 @@ void defineBackground() // redefine o fundo para o padrão inicial
     }
     fclose(matrix);
 
-
     changePositions(&pacman_player, 18, 1);
     changePositions(&ghosts[0], 9, 10);
     changePositions(&ghosts[1], 10, 9);
@@ -99,31 +110,7 @@ void defineBackground() // redefine o fundo para o padrão inicial
     changePositions(&ghosts[3], 9, 9);
 }
 
-void defineGameOver() // redefine o fundo para a tela de game over
-{
-    FILE *matrix = fopen("./game_over.txt", "r");
-
-    int line = 0, col = 0;
-    char c;
-
-    while ((c = fgetc(matrix)) != EOF)
-    {
-        if (c == '\r')
-        {
-            continue;
-        }
-        if (c == '\n')
-        {
-            col = 0;
-            line++;
-            continue;
-        }
-        game_over_background[line][col++] = c - '0';
-    }
-    fclose(matrix);
-}
-
-void circles() // coloca as bolinhas no labirinto
+void circles() //set the balls in the maze
 {
     for (int i = 0; i < ROWS; i++) 
     {
@@ -138,7 +125,7 @@ void circles() // coloca as bolinhas no labirinto
     }
 }
 
-void specialFruit() // gera a frutinha especial
+void specialFruit() //generates the special fruit
 {
     int position = 0, n;
 
@@ -174,20 +161,8 @@ void specialFruit() // gera a frutinha especial
     }
 }
 
-void redefineBackground()
-{
-    for (int i = 0; i < ROWS; i++)
-    {
-        for (int j = 0; j < COLS; j++)
-        {
-            background[i][j] = source[i][j];
-        }
-    }
-    
-}
 
-
-// move character ============================================================
+// MOVE PACMAN ===========================================
 
 
 void moveUp () 
@@ -263,12 +238,8 @@ void moveRight ()
 }
 
 
-// move ghosts ===============================================================
+// MOVE GHOSTS ===========================================
 
-
-bool recalculate = true;
-
-int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
 bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_destiny)
 {
@@ -351,7 +322,8 @@ void ghostsMovements(Character* ghost)
     }
 
     
-    if (ghost->recalculate) {
+    if (ghost->recalculate) 
+    {
         parent_x = -1;
         parent_y = -1;
         lastx = -1;
@@ -379,30 +351,34 @@ void ghostsMovements(Character* ghost)
     ghost->x = x;
     ghost->y = y;
 
-    // guardar o valor da casa do pacman na variavel!!!
 }
 
-// gameloop ==================================================================
+
+// GAME LOOP =============================================
+
 
 void commands(int input)
 {
     if (input == 119)
     {
-        for(int i = 0; i <4; i++){
+        for(int i = 0; i <4; i++)
+        {
             ghosts[i].recalculate = true;
         }
         moveUp(); // Tecla W, subir
     }
     else if (input == 97)
     {
-        for(int i = 0; i <4; i++){
+        for(int i = 0; i <4; i++)
+        {
             ghosts[i].recalculate = true;
         }
         moveLeft(); // Tecla A, esquerda
     }
     else if (input == 115)
     {
-        for(int i = 0; i <4; i++){
+        for(int i = 0; i <4; i++)
+        {
             ghosts[i].recalculate = true;
         }
         moveDown(); // Tecla S, descer
@@ -451,61 +427,33 @@ void printWall(int x, int y)
         if (background[y-1][x] == 1) {up = 1;}
     }
 
-    if (up && down && right)
-    {
-        printf("%c%c", 204, 205);
-    }
-    else if (left && up && right)
-    {
-        printf("%c%c", 202, 205);
-    }
-    else if (left && down && right)
-    {
-        printf("%c%c", 203, 205);
-    }
-    else if (up && left && down)
-    {
-        printf("%c ", 185);
-    }
-    else if (up && right && down)
-    {
-        printf("%c%c", 204, 205);
-    }
-    else if (left && up)
-    {
-        printf("%c ", 188);
-    }
-    else if (left && down)
-    {
-        printf("%c ", 187);
-    }
-    else if (up && right)
-    {
-        printf("%c%c", 200, 205);
-    }
-    else if (right && down)
-    {
-        printf("%c%c", 201, 205);
-    }
-    else if (up || down)
-    {
-        printf("%c ", 186);
-    }
+    if (up && down && right) {printf("%c%c", 204, 205);}
+
+    else if (left && up && right) {printf("%c%c", 202, 205);}
+
+    else if (left && down && right) {printf("%c%c", 203, 205);}
+
+    else if (up && left && down) {printf("%c ", 185);}
+
+    else if (up && right && down) {printf("%c%c", 204, 205);}
+
+    else if (left && up) {printf("%c ", 188);}
+
+    else if (left && down) {printf("%c ", 187);}
+
+    else if (up && right) {printf("%c%c", 200, 205);}
+
+    else if (right && down) {printf("%c%c", 201, 205);}
+
+    else if (up || down) {printf("%c ", 186);}
+
     else if (left || right)
     {
-        if (left && !right)
-        {
-            printf("%c ", 205);
-        }
-        else
-        {
-            printf("%c%c", 205, 205);
-        }
+        if (left && !right) {printf("%c ", 205);}
+
+        else {printf("%c%c", 205, 205);}
     }
-    else 
-    {
-        printf("o ");
-    }
+    else {printf("o ");}
 }
 
 void printMatrix()
@@ -608,11 +556,11 @@ void startGame() // funções para começar o jogo
     }
     
     printMatrix();
-    Sleep(5000);
+    // Sleep(5000);
 }
 
 
-// MAIN ===============================================
+// MAIN ==================================================
 
 
 int main(void)
