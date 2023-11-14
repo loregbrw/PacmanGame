@@ -502,7 +502,7 @@ void printMatrix()
             if (background[i][j] == 5)
             {
                 FOREGROUND_COLOR(222, 7, 50);
-                printf("%c ", 208);
+                printf("%c ", 254);
                 RESET_FOREGROUND();
             }
             else if (background[i][j] == 2)
@@ -568,7 +568,7 @@ void gameLoop()
 
         background[pacman_player.y][pacman_player.x] = 3;
         for (int i = 0 ; i < 4; i++)
-        {
+        { 
             background[ghosts[i].y][ghosts[i].x] = 4;
         }
         
