@@ -287,21 +287,58 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
     parent_x = x;
     parent_y = y;
 
-    if (flood(background, x+1, y, x_destiny, y_destiny))
-    {        
-        return true;
+    int nums[4] = {0, 1, 2, 3};
+    int length = 4;
+
+    for (int i = 0; i < length; i++)
+    {
+        int num1 = rand() % length;
+        int num2 = rand() % length;
+
+        if (num1 == num2)
+        {
+            continue;
+        }
+
+        nums[num1] = nums[num1] ^ nums [num2];
+        nums[num2] = nums[num1] ^ nums [num2];
+        nums[num1] = nums[num1] ^ nums [num2];
     }
-    if (flood(background, x, y+1, x_destiny, y_destiny))
-    {        
-        return true;
-    }
-    if (flood(background, x-1, y, x_destiny, y_destiny))
-    {        
-        return true;
-    }
-    if (flood(background, x, y-1, x_destiny, y_destiny))
-    {        
-        return true;
+    
+    for (int i = 0; i < length; i++)
+    {
+        switch (nums[i])
+        {
+        case 0:
+            if (flood(background, x+1, y, x_destiny, y_destiny))
+            {        
+                return true;
+            }
+            break;
+
+        case 1:
+            if (flood(background, x, y+1, x_destiny, y_destiny))
+            {        
+                return true;
+            }
+            break;
+        
+        case 2:
+            if (flood(background, x-1, y, x_destiny, y_destiny))
+            {        
+                return true;
+            }
+            break;
+
+        case 3:
+            if (flood(background, x, y-1, x_destiny, y_destiny))
+            {        
+                return true;
+            }
+            break;
+        default:
+            break;
+        }
     }
 
     return false;
@@ -309,7 +346,6 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
 
 void ghostsMovements(Character* ghost)
 {
-
     for (int i = 0 ; i < ROWS; i++)
     {
         for (int j = 0 ; j < ROWS; j++)
@@ -321,7 +357,6 @@ void ghostsMovements(Character* ghost)
         }
     }
 
-    
     if (ghost->recalculate) 
     {
         parent_x = -1;
@@ -350,7 +385,6 @@ void ghostsMovements(Character* ghost)
     
     ghost->x = x;
     ghost->y = y;
-
 }
 
 
@@ -522,7 +556,7 @@ void gameLoop()
         ticks++;
         commands(getInput());
 
-        if (ticks % 200 == 0)
+        if (ticks % 300 == 0)
         {
             for (int i = 0; i < 4; i++)
             {
