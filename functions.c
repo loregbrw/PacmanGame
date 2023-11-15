@@ -1,36 +1,11 @@
 #define MINIAUDIO_IMPLEMENTATION
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <time.h>
-#include <stdbool.h>
-#include <conio.h>
-#include <stdint.h>
-
 #include "miniaud.h"
 #include "terminal.h"
+#include "functions.h"
 
 
 // =======================================================
-
-
-#define ROWS 20
-#define COLS 20
-
-typedef struct Node
-{
-    int x,y;
-    bool visited;
-    int value;
-    struct Node* parent;
-} Node_T;
-
-typedef struct
-{
-    bool recalculate;
-    Node_T route[ROWS][COLS];
-    int x, y, value1, value2;
-} Character;
 
 Character pacman_player;
 Character ghosts[4];
