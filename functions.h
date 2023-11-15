@@ -8,6 +8,9 @@
 #include <conio.h>
 #include <stdint.h>
 
+#include "miniaud.h"
+#include "terminal.h"
+
 #define ROWS 20
 #define COLS 20
 
@@ -25,6 +28,19 @@ typedef struct
     Node_T route[ROWS][COLS];
     int x, y, value1, value2;
 } Character;
+
+
+Character pacman_player;
+Character ghosts[4];
+
+char user_input;
+bool game_over, recalculate = true;
+
+ma_result result;
+ma_engine engine;
+
+int source[ROWS][COLS], background[ROWS][COLS], game_over_matrix[ROWS][COLS], score;
+int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
 int getInput();
 void changePositions(Character* character, int new_y, int new_x);
