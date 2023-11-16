@@ -24,7 +24,7 @@ ma_engine engine;
 
 void youWin()
 {
-    FILE* youwin = fopen("youwin.txt", "r");
+    FILE* youwin = fopen("./txts/youwin.txt", "r");
 
     line = 0;
     col = 0;
@@ -48,7 +48,7 @@ void youWin()
 
 void matrixGameover()
 {
-    FILE* gameover = fopen("gameover.txt", "r");
+    FILE* gameover = fopen("./txts/gameover.txt", "r");
 
     line = 0;
     col = 0;
@@ -72,7 +72,7 @@ void matrixGameover()
 
 void firstAnimation()
 {
-    FILE* animation1 = fopen("firstFrame.txt", "r");
+    FILE* animation1 = fopen("./txts/firstFrame.txt", "r");
 
     line = 0;
     col = 0;
@@ -96,7 +96,7 @@ void firstAnimation()
 
 void secondAnimation()
 {
-    FILE* animation2 = fopen("secondFrame.txt", "r");
+    FILE* animation2 = fopen("./txts/secondFrame.txt", "r");
 
     line = 0;
     col = 0;
@@ -120,7 +120,7 @@ void secondAnimation()
 
 void thirdAnimation()
 {
-    FILE *animation3 = fopen("thirdFrame.txt", "r");
+    FILE *animation3 = fopen("./txts/thirdFrame.txt", "r");
 
     line = 0;
     col = 0;
