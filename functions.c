@@ -358,7 +358,7 @@ void commands(int input)
         {
             ghosts[i].recalculate = true;
         }
-        moveUp(); // Tecla W, subir
+        moveUp(); // W key, up
     }
     else if (input == 97)
     {
@@ -366,7 +366,7 @@ void commands(int input)
         {
             ghosts[i].recalculate = true;
         }
-        moveLeft(); // Tecla A, esquerda
+        moveLeft(); // A key, left
     }
     else if (input == 115)
     {
@@ -374,22 +374,18 @@ void commands(int input)
         {
             ghosts[i].recalculate = true;
         }
-        moveDown(); // Tecla S, descer
+        moveDown(); // S key, down
     }
     else if (input == 100)
     {
         for(int i = 0; i <4; i++){
             ghosts[i].recalculate = true;
         }
-        moveRight(); // Tecla D, direita
+        moveRight(); // D key, right
     }
     else if (input == 13)
     {
         // Tecla enter
-    }
-    else if (input == 32)
-    {
-        // Tecla espaço
     }
 }
 
@@ -507,6 +503,20 @@ void printMatrix()
     fflush(stdout);        
 }
 
+void animationPrint()
+{
+
+}
+
+void menuPage()
+{
+    while (getInput() != 13)
+    {
+        /* code */
+    }
+    
+}
+
 void gameLoop()
 {
     uint64_t ticks = 0;
@@ -516,7 +526,7 @@ void gameLoop()
         ticks++;
         commands(getInput());
 
-        if (ticks % 300 == 0)
+        if (ticks % 500 == 0)
         {
             for (int i = 0; i < 4; i++)
             {

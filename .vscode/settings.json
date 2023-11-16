@@ -3,6 +3,7 @@
         "terminal.h": "c",
         "sdl.h": "c",
         "conio.h": "c",
-        "miniaud.h": "c"
+        "miniaud.h": "c",
+        "characters.h": "c"
     }
 }
