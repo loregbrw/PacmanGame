@@ -201,7 +201,10 @@ void printAnimation(int matrix[ROWS][COLS])
         }
         printf("\n");
     }
-    printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+    printf("\nscore: ");
+    FOREGROUND_COLOR(250, 177, 7);
+    printf("%i", score);
+    RESET_FOREGROUND();
     ERASE_LEND();
 
     fflush(stdout);        
@@ -241,7 +244,10 @@ void printScreen(int matrix[ROWS][COLS])
         }
         printf("\n");
     }
-    printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+    printf("\nscore: ");
+    FOREGROUND_COLOR(250, 177, 7);
+    printf("%i", score);
+    RESET_FOREGROUND();
     ERASE_LEND();
 
     fflush(stdout);        

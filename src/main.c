@@ -10,20 +10,24 @@ int main(void)
     result = ma_engine_init(NULL, &engine);    
 
     configureTerminal();
-    
-    score = 0;
 
-    initialMenu();
-
-    startGame();
-    
-    gameLoop();
-
-    if (pacman_player.alive == false)
+    while (1)
     {
-        gameOver(&engine);
+        score = 0;
+
+        initialMenu();
+
+        startGame();
+        
+        gameLoop();
+
+        if (pacman_player.alive == false)
+        {
+            gameOver(&engine);
+        }
+        winner();
     }
-    winner();
+    
     ma_engine_uninit(&engine);
 
     return 0;
