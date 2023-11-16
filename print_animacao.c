@@ -144,63 +144,64 @@ void AnimacaoUm() // redefine o fundo para a tela de game over
     fflush(stdout);
     }
 
-    void printWall(int x, int y, int animacao[20][20])
+    void printWall(int animacao[20][20]) 
     {
-        int up = 0, down = 0, left = 0, right = 0;
-
-        if (x != 19)
+        for (int i = 0; i < 20; i++) 
         {
-            if (animacao[y][x+1] == 1) {right = 1;}
-        }
-        if (x != 0)
-        {
-            if (animacao[y][x-1] == 1) {left = 1;}
-        }
-        if (y != 19)
-        {
-            if (animacao[y+1][x] == 1) {down = 1;}
-        }
-        if (y != 0)
-        {
-            if (animacao[y-1][x] == 1) {up = 1;}
-        }
-
-        else if (up && right && down)
-        {
-            printf("%c%c", 204, 205);
-        }
-        else if (left && up)
-        {
-            printf("%c ", 188);
-        }
-        else if (left && down)
-        {
-            printf("%c ", 187);
-        }
-        else if (up && right)
-        {
-            printf("%c%c", 200, 205);
-        }
-        else if (right && down)
-        {
-            printf("%c%c", 201, 205);
-        }
-        else if (up || down)
-        {
-            printf("%c ", 186);
-        }
-        else if (left || right)
-        {
-            if (left && !right)
+            for (int j = 0; j < 20; j++) 
             {
-                printf("%c ", 205);
+                if (animacao[i][j] == 9)   
+                {
+                    int up = (i > 0 && animacao[i - 1][j] == 9);
+                    int down = (i < 19 && animacao[i + 1][j] == 9);
+                    int left = (j > 0 && animacao[i][j - 1] == 9);
+                    int right = (j < 19 && animacao[i][j + 1] == 9);
+
+                    if (up && right && left) 
+                    {
+                        printf("%c", 205); // ─
+                    } 
+                    else if (down && right && left) 
+                    {
+                        printf("%c", 205); // ─
+                    } 
+                    else if (up && down) 
+                    {
+                        printf("%c", 186); // │
+                    } 
+                    else if (left && right) 
+                    {
+                        printf("%c", 205); // ─
+                    } 
+                    else if (up) 
+                    {
+                        printf("%c", 200); // └
+                    } 
+                    else if (down) 
+                    {
+                        printf("%c", 204); // ┌
+                    } 
+                    else if (left) 
+                    {
+                        printf("%c", 185); // ┐
+                    } 
+                    else if (right) 
+                    {
+                        printf("%c", 204); // ┌
+                    } 
+                    else {
+                        printf("  "); // Dois espaços para manter a formatação correta
+                    }
+                } 
+                else 
+                {
+                    printf("  "); // Dois espaços para manter a formatação correta
+                }
             }
-            else
-            {
-                printf("%c%c", 205, 205);
-            }
+            printf("\n");
+        }
     }
-    }
+
 
 int main(){
     
@@ -208,12 +209,17 @@ int main(){
     AnimacaoUm();
     AnimacaoDois();
     AnimacaoTres();
+    printWall(animacao_um);
+
 
     result = ma_engine_init(NULL, &engine);  
     ma_engine_play_sound(&engine, "musica.mp3", NULL);
     Sleep(5000);
+
+
     for (int i = 0; i < 10; i++)
     {   
+        
         Coloridinho(animacao_um);
         Sleep(100);
         Coloridinho(animacao_dois);
