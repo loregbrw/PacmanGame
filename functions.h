@@ -26,7 +26,7 @@ typedef struct
 {
     bool recalculate;
     Node_T route[ROWS][COLS];
-    int x, y, value1, value2;
+    int x, y;
 } Character;
 
 

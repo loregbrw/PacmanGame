@@ -460,7 +460,7 @@ void printMatrix()
         {
             if (background[i][j] == 5)
             {
-                FOREGROUND_COLOR(222, 7, 50);
+                FOREGROUND_COLOR(191, 24, 237);
                 printf("%c ", 254);
                 RESET_FOREGROUND();
             }
@@ -482,13 +482,19 @@ void printMatrix()
             }
             else if (background[i][j] == 4)
             {
-                FOREGROUND_COLOR(50, 201, 68);
+                FOREGROUND_COLOR(7, 179, 165);
+                printf("W ");
+                RESET_FOREGROUND();
+            }
+            else if (background[i][j] == 6)
+            {
+                FOREGROUND_COLOR(255, 46, 122);
                 printf("W ");
                 RESET_FOREGROUND();
             }
             else
             {
-                FOREGROUND_COLOR(5, 125, 245);
+                FOREGROUND_COLOR(7, 41, 179);
                 printWall(j, i);
                 RESET_FOREGROUND();
             }
@@ -503,11 +509,6 @@ void printMatrix()
 
 void gameLoop()
 {
-    for (int i = 0; i < 4; i++)
-    {
-        ghosts[i].value1 = 2;
-    }
-
     uint64_t ticks = 0;
 
     while (1)
@@ -526,10 +527,11 @@ void gameLoop()
         redefineBackground();
 
         background[pacman_player.y][pacman_player.x] = 3;
-        for (int i = 0 ; i < 4; i++)
-        { 
-            background[ghosts[i].y][ghosts[i].x] = 4;
-        }
+        background[ghosts[0].y][ghosts[0].x] = 4;
+        background[ghosts[1].y][ghosts[1].x] = 4;
+        background[ghosts[2].y][ghosts[2].x] = 6;
+        background[ghosts[3].y][ghosts[3].x] = 6;
+
         
         printMatrix();
     }
