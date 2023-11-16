@@ -14,10 +14,12 @@
 #include "functions.h"
 
 
+
 int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS], you_win[ROWS][COLS];
 int line, col;
 char c;
-
+ma_result result;
+ma_engine engine;
 
 
 void youWin()
@@ -246,7 +248,6 @@ void printScreen(int matrix[ROWS][COLS])
 
 void gameOver(ma_engine * engine)
 {
-    ma_result result;
     matrixGameover();
     ma_engine_play_sound(engine, "morte.mp3", NULL);
     while (1)
