@@ -85,10 +85,8 @@ void defineBackground() //resets the matrix to initial default
 
     while ((c = fgetc(matrix)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -112,11 +110,7 @@ void circles() //set the balls in the maze
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (source[i][j] == 0)
-            {
-                source[i][j] = 2;
-
-            }
+            if (source[i][j] == 0) {source[i][j] = 2;}
         }
     }
 }
@@ -129,11 +123,7 @@ void specialFruit() //generates the special fruit
     {
         for (int j = 0; j < COLS; j++)
         {
-            if (source[i][j] == 2)
-
-            {
-                position++;
-            }
+            if (source[i][j] == 2) {position++;}
         }
     }
     srand(time(NULL));
@@ -143,13 +133,11 @@ void specialFruit() //generates the special fruit
         for (int j = 0; j < COLS; j++)
         {
             if (source[i][j] == 2)
-
             {
                 n--;
                 if (n == 0)
                 {
                     source[i][j] = 5;
-
                     break;
                 }
             }
@@ -165,10 +153,8 @@ void moveUp ()
 {
     if (background[pacman_player.y - 1][pacman_player.x] != 1)
     {
-        if (background[pacman_player.y - 1][pacman_player.x] == 2)
-        {
-            score += 10;
-        }
+        if (background[pacman_player.y - 1][pacman_player.x] == 2) {score += 10;}
+
         else if (background[pacman_player.y - 1][pacman_player.x] == 5)
         {
             ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
@@ -184,10 +170,8 @@ void moveLeft ()
 {
     if (background[pacman_player.y][(pacman_player.x) - 1] != 1)
     {
-        if (background[pacman_player.y][pacman_player.x - 1] == 2)
-        {
-            score += 10;
-        }
+        if (background[pacman_player.y][pacman_player.x - 1] == 2) {score += 10;}
+        
         else if (background[pacman_player.y][pacman_player.x - 1] == 5)
         {
             ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
@@ -203,10 +187,8 @@ void moveDown ()
 {
     if (background[(pacman_player.y) + 1][pacman_player.x] != 1)
     {
-        if (background[pacman_player.y + 1][pacman_player.x] == 2)
-        {
-            score += 10;
-        }
+        if (background[pacman_player.y + 1][pacman_player.x] == 2) {score += 10;}
+        
         else if (background[pacman_player.y + 1][pacman_player.x] == 5)
         {
             ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
@@ -222,10 +204,8 @@ void moveRight ()
 {
     if (background[pacman_player.y][(pacman_player.x) + 1] != 1)
     {
-        if (background[pacman_player.y][pacman_player.x + 1] == 2)
-        {
-            score += 10;
-        }
+        if (background[pacman_player.y][pacman_player.x + 1] == 2) {score += 10;}
+        
         else if (background[pacman_player.y][pacman_player.x + 1] == 5)
         {
             ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
@@ -310,32 +290,21 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
         switch (nums[i])
         {
         case 0:
-            if (flood(background, x+1, y, x_destiny, y_destiny))
-            {        
-                return true;
-            }
+            if (flood(background, x+1, y, x_destiny, y_destiny)) {return true;}
             break;
 
         case 1:
-            if (flood(background, x, y+1, x_destiny, y_destiny))
-            {        
-                return true;
-            }
+            if (flood(background, x, y+1, x_destiny, y_destiny)) {return true;}
             break;
         
         case 2:
-            if (flood(background, x-1, y, x_destiny, y_destiny))
-            {        
-                return true;
-            }
+            if (flood(background, x-1, y, x_destiny, y_destiny)) {return true;}
             break;
 
         case 3:
-            if (flood(background, x, y-1, x_destiny, y_destiny))
-            {        
-                return true;
-            }
+            if (flood(background, x, y-1, x_destiny, y_destiny)) {return true;}
             break;
+
         default:
             break;
         }
@@ -371,11 +340,7 @@ void ghostsMovements(Character* ghost)
 
     while (true)
     {
-        
-        if (curr->parent->x == ghost->x && curr->parent->y == ghost->y)
-        {
-            break;
-        }
+        if (curr->parent->x == ghost->x && curr->parent->y == ghost->y) {break;}
 
         curr = curr->parent;
     }
@@ -541,7 +506,6 @@ void printMatrix()
     fflush(stdout);        
 }
 
-
 void gameLoop()
 {
     uint64_t ticks = 0;
@@ -609,6 +573,5 @@ void startGame() // funções para começar o jogo
     printMatrix();
     // Sleep(5000);
 }
-
 
 #endif

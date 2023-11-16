@@ -21,10 +21,8 @@ int main(void)
         
         gameLoop();
 
-        if (pacman_player.alive == false)
-        {
-            gameOver(&engine);
-        }
+        if (pacman_player.alive == false) {gameOver(&engine);}
+
         winner();
     }
     

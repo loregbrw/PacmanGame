@@ -13,15 +13,12 @@
 #include "terminal.h"
 #include "functions.h"
 
-
-
 int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS], you_win[ROWS][COLS];
 int line, col;
 char c;
 
 ma_result result;
 ma_engine engine;
-
 
 void youWin()
 {
@@ -32,10 +29,8 @@ void youWin()
 
     while ((c = fgetc(youwin)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -56,10 +51,8 @@ void matrixGameover()
 
     while ((c = fgetc(gameover)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -80,10 +73,8 @@ void firstAnimation()
 
     while ((c = fgetc(animation1)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -104,10 +95,8 @@ void secondAnimation()
 
     while ((c = fgetc(animation2)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -128,10 +117,8 @@ void thirdAnimation()
 
     while ((c = fgetc(animation3)) != EOF)
     {
-        if (c == '\r')
-        {
-            continue;
-        }
+        if (c == '\r') {continue;}
+
         if (c == '\n')
         {
             col = 0;
@@ -168,30 +155,19 @@ void printAnimation(int matrix[ROWS][COLS])
                 printf("%c ", 254);
                 RESET_FOREGROUND();
             }
-            else if (matrix[i][j] == 4)
-            {
-                printf("p ");
-            }
-            else if (matrix[i][j] == 5)
-            {
-                printf("r ");
-            }
-            else if (matrix[i][j] == 6)
-            {
-                printf("e ");
-            }
-            else if (matrix[i][j] == 7)
-            {
-                printf("s ");
-            }
-            else if (matrix[i][j] == 8)
-            {
-                printf("n ");
-            }
-            else if (matrix[i][j] == 9)
-            {
-                printf("t ");
-            }
+
+            else if (matrix[i][j] == 4) {printf("p ");}
+
+            else if (matrix[i][j] == 5) {printf("r ");}
+
+            else if (matrix[i][j] == 6) {printf("e ");}
+
+            else if (matrix[i][j] == 7) {printf("s ");}
+
+            else if (matrix[i][j] == 8) {printf("n ");}
+
+            else if (matrix[i][j] == 9) {printf("t ");}
+
             else
             {
                 FOREGROUND_COLOR(7, 41, 179);
@@ -219,10 +195,8 @@ void printScreen(int matrix[ROWS][COLS])
     {
         for (int  j = 0; j < COLS; j++)
         {
-            if (matrix[i][j] == 0)
-            {
-                printf("  ");
-            }
+            if (matrix[i][j] == 0) {printf("  ");}
+
             else if (matrix[i][j] == 3)
             {
                 FOREGROUND_COLOR(250, 177, 7);
