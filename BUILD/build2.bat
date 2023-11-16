@@ -1,1 +1,0 @@
-gcc -g -I. terminal.c terminal.h miniaud.h tetete.c -o gameover.exe 

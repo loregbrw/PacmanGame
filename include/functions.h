@@ -78,7 +78,7 @@ void redefineBackground() //resets the background
 
 void defineBackground() //resets the matrix to initial default
 {
-    FILE *matrix = fopen("./background.txt", "r");
+    FILE *matrix = fopen("./txts/background.txt", "r");
 
     int line = 0, col = 0;
     char c;
@@ -588,7 +588,7 @@ void gameLoop()
 
 void startGame() // funções para começar o jogo
 {
-    ma_engine_play_sound(&engine, "abertura.mp3", NULL);
+    ma_engine_play_sound(&engine, "./sounds/abertura.mp3", NULL);
     
     defineBackground();
     circles();
