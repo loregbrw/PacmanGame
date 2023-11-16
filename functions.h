@@ -546,7 +546,7 @@ void gameLoop()
         ticks++;
         commands(getInput());
 
-        if (ticks % 300 == 0)
+        if (ticks % 150 == 0)
         {
             for (int i = 0; i < 4; i++)
             {
