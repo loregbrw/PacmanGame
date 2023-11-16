@@ -358,7 +358,7 @@ void ghostsMovements(Character* ghost)
 
 void commands(int input)
 {
-    if (input == 119)
+    if (input == 119 || input == 87)
     {
         for(int i = 0; i <4; i++)
         {
@@ -366,7 +366,7 @@ void commands(int input)
         }
         moveUp(); // W key, up
     }
-    else if (input == 97)
+    else if (input == 97 || input == 65)
     {
         for(int i = 0; i <4; i++)
         {
@@ -374,7 +374,7 @@ void commands(int input)
         }
         moveLeft(); // A key, left
     }
-    else if (input == 115)
+    else if (input == 115 || input == 83)
     {
         for(int i = 0; i <4; i++)
         {
@@ -382,7 +382,7 @@ void commands(int input)
         }
         moveDown(); // S key, down
     }
-    else if (input == 100)
+    else if (input == 100 || input == 68)
     {
         for(int i = 0; i <4; i++){
             ghosts[i].recalculate = true;
@@ -549,10 +549,8 @@ void gameLoop()
             }
         }
 
-        if (pacman_player.alive == false || pacman_player.win == true)
-        {
-            return;
-        }
+        if (pacman_player.alive == false || pacman_player.win == true) {return;}
+
         printMatrix();
     }
 }
