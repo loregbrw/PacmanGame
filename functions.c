@@ -389,11 +389,6 @@ void commands(int input)
     }
 }
 
-void gameOver()
-{
-    // ma_engine_play_sound(&engine, "morte.mp3", NULL);
-    // GAMEOVER
-}
 
 void printWall(int x, int y) 
 {
@@ -503,19 +498,6 @@ void printMatrix()
     fflush(stdout);        
 }
 
-void animationPrint()
-{
-
-}
-
-void menuPage()
-{
-    while (getInput() != 13)
-    {
-        /* code */
-    }
-    
-}
 
 void gameLoop()
 {

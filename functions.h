@@ -39,7 +39,7 @@ bool game_over, recalculate = true;
 ma_result result;
 ma_engine engine;
 
-int source[ROWS][COLS], background[ROWS][COLS], game_over_matrix[ROWS][COLS], score;
+int source[ROWS][COLS], background[ROWS][COLS], score;
 int parent_x = -1, parent_y = -1, lastx = -1, lasty = -1;
 
 int getInput() //constantly gets the user input

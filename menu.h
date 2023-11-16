@@ -12,9 +12,34 @@
 #include "terminal.h"
 #include "functions.h"
 
-int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS];
+
+int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS];
 int line, col;
 char c;
+
+void matrixGameover()
+{
+    FILE* gameover = fopen("gameover.txt", "r");
+
+    line = 0;
+    col = 0;
+
+    while ((c = fgetc(gameover)) != EOF)
+    {
+        if (c == '\r')
+        {
+            continue;
+        }
+        if (c == '\n')
+        {
+            col = 0;
+            line++;
+            continue;
+        }
+        game_over_matrix[line][col++] = c - '0';
+    }
+    fclose(gameover);
+}
 
 void firstAnimation()
 {
@@ -152,13 +177,58 @@ void printAnimation(int matrix[ROWS][COLS])
     fflush(stdout);        
 }
 
+void printGameover()
+{
+    HIDE_CURSOR();
+    MOVE_HOME();
+
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int  j = 0; j < COLS; j++)
+        {
+            if (game_over_matrix[i][j] == 0)
+            {
+                printf("  ");
+            }
+            else if (game_over_matrix[i][j] == 3)
+            {
+                FOREGROUND_COLOR(250, 177, 7);
+                printf("%c ", 254);
+                RESET_FOREGROUND();
+            }
+            else if (game_over_matrix[i][j] == 4)
+            {
+                FOREGROUND_COLOR(255, 46, 122);
+                printf("%c ", 254);
+                RESET_FOREGROUND();
+            }
+            else
+            {
+                FOREGROUND_COLOR(7, 41, 179);
+                printWall(j, i, game_over_matrix);
+                RESET_FOREGROUND();
+            }
+        }
+        printf("\n");
+    }
+    printf("\n y: %i - x: %i - score: %i", pacman_player.y, pacman_player.x, score);
+    ERASE_LEND();
+
+    fflush(stdout);        
+}
+
+void gameOver()
+{
+    matrixGameover();
+    printGameover();
+}
+
 void initialMenu()
 {
     firstAnimation();
     secondAnimation();
     thirdAnimation();
 
-    uint64_t ticks = 0;
 
     while (getInput() != 13)
     {
@@ -170,10 +240,7 @@ void initialMenu()
         Sleep(200);
         printAnimation(second_frame);
         Sleep(200);
-
     }
-    
-    
 }
 
 #endif

@@ -4,6 +4,7 @@
         "sdl.h": "c",
         "conio.h": "c",
         "miniaud.h": "c",
-        "characters.h": "c"
+        "characters.h": "c",
+        "gameover.h": "c"
     }
 }
