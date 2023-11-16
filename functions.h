@@ -10,6 +10,7 @@
 
 #include "miniaud.h"
 #include "terminal.h"
+#include "mem.h"
 
 #define ROWS 20
 #define COLS 20
@@ -480,7 +481,7 @@ void printWall(int x, int y)
     else {printf("o ");}
 }
 
-void printMatrix()
+void printMatrix(int matrix[ROWS][COLS])
 {
     HIDE_CURSOR();
     MOVE_HOME();
@@ -489,35 +490,35 @@ void printMatrix()
     {
         for (int  j = 0; j < 20; j++)
         {
-            if (background[i][j] == 5)
+            if (matrix[i][j] == 5)
             {
                 FOREGROUND_COLOR(191, 24, 237);
                 printf("%c ", 254);
                 RESET_FOREGROUND();
             }
-            else if (background[i][j] == 2)
+            else if (matrix[i][j] == 2)
             {
                 FOREGROUND_COLOR(196, 173, 153);
                 printf("%c ", 250);
                 RESET_FOREGROUND();
             }
-            else if (background[i][j] == 0)
+            else if (matrix[i][j] == 0)
             {
                 printf("  ");
             }
-            else if (background[i][j] == 3)
+            else if (matrix[i][j] == 3)
             {
                 FOREGROUND_COLOR(250, 177, 7);
                 printf("C ");
                 RESET_FOREGROUND();
             }
-            else if (background[i][j] == 4)
+            else if (matrix[i][j] == 4)
             {
                 FOREGROUND_COLOR(7, 179, 165);
                 printf("W ");
                 RESET_FOREGROUND();
             }
-            else if (background[i][j] == 6)
+            else if (matrix[i][j] == 6)
             {
                 FOREGROUND_COLOR(255, 46, 122);
                 printf("W ");
@@ -578,7 +579,7 @@ void gameLoop()
         background[ghosts[3].y][ghosts[3].x] = 6;
 
         
-        printMatrix();
+        printMatrix(background);
     }
 }
 
@@ -595,7 +596,7 @@ void startGame() // funções para começar o jogo
         ghosts[i].recalculate = true;
     }
     
-    printMatrix();
+    printMatrix(background);
     // Sleep(5000);
 }
 

@@ -3,8 +3,7 @@
 #include "miniaud.h"
 #include "terminal.h"
 #include "functions.h"
-#include "characters.h"
-
+#include "menu.h"
 
 int main(void)
 {
@@ -14,6 +13,8 @@ int main(void)
     
     score = 0;
     game_over = false;
+
+    initialMenu();
 
     startGame();
     
