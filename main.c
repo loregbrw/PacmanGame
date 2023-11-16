@@ -21,7 +21,7 @@ int main(void)
 
     if (pacman_player.alive == false)
     {
-        gameOver();
+        gameOver(&engine);
     }
     winner();
     ma_engine_uninit(&engine);

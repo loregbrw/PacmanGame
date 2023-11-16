@@ -1,5 +1,6 @@
 #ifndef MENU_H
 #define MENU_H
+#define MINIAUDIO_IMPLEMENTATION
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,6 +17,8 @@
 int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS], you_win[ROWS][COLS];
 int line, col;
 char c;
+
+
 
 void youWin()
 {
@@ -241,9 +244,11 @@ void printScreen(int matrix[ROWS][COLS])
     fflush(stdout);        
 }
 
-void gameOver()
+void gameOver(ma_engine * engine)
 {
+    ma_result result;
     matrixGameover();
+    ma_engine_play_sound(engine, "morte.mp3", NULL);
     while (1)
     {
         printScreen(game_over_matrix);
