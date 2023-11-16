@@ -18,6 +18,7 @@
 int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS], you_win[ROWS][COLS];
 int line, col;
 char c;
+
 ma_result result;
 ma_engine engine;
 
@@ -246,10 +247,10 @@ void printScreen(int matrix[ROWS][COLS])
     fflush(stdout);        
 }
 
-void gameOver(ma_engine * engine)
+void gameOver()
 {
+    ma_engine_play_sound(&engine, "sounds/morte.mp3", NULL);
     matrixGameover();
-    ma_engine_play_sound(engine, "morte.mp3", NULL);
     while (1)
     {
         printScreen(game_over_matrix);

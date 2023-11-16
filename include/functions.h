@@ -171,6 +171,7 @@ void moveUp ()
         }
         else if (background[pacman_player.y - 1][pacman_player.x] == 5)
         {
+            ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
             score += 50;
             // poder especial
         }
@@ -189,6 +190,7 @@ void moveLeft ()
         }
         else if (background[pacman_player.y][pacman_player.x - 1] == 5)
         {
+            ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
             score += 50;
             // poder especial
         }
@@ -207,6 +209,7 @@ void moveDown ()
         }
         else if (background[pacman_player.y + 1][pacman_player.x] == 5)
         {
+            ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
             score += 50;
             // poder especial
         }
@@ -225,6 +228,7 @@ void moveRight ()
         }
         else if (background[pacman_player.y][pacman_player.x + 1] == 5)
         {
+            ma_engine_play_sound(&engine, "sounds/frutinha.mp3", NULL);
             score += 50;
             // poder especial
         }
@@ -588,7 +592,7 @@ void gameLoop()
 
 void startGame() // funções para começar o jogo
 {
-    ma_engine_play_sound(&engine, "./sounds/abertura.mp3", NULL);
+    ma_engine_play_sound(&engine, "sounds/abertura.mp3", NULL);
     
     defineBackground();
     circles();
