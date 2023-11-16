@@ -167,11 +167,11 @@ void moveUp ()
     {
         if (background[pacman_player.y - 1][pacman_player.x] == 2)
         {
-            score++;
+            score += 10;
         }
         else if (background[pacman_player.y - 1][pacman_player.x] == 5)
         {
-            score += 5;
+            score += 50;
             // poder especial
         }
         source[pacman_player.y][pacman_player.x] = 0;
@@ -185,11 +185,11 @@ void moveLeft ()
     {
         if (background[pacman_player.y][pacman_player.x - 1] == 2)
         {
-            score++;
+            score += 10;
         }
         else if (background[pacman_player.y][pacman_player.x - 1] == 5)
         {
-            score += 5;
+            score += 50;
             // poder especial
         }
         source[pacman_player.y][pacman_player.x] = 0;
@@ -203,11 +203,11 @@ void moveDown ()
     {
         if (background[pacman_player.y + 1][pacman_player.x] == 2)
         {
-            score++;
+            score += 10;
         }
         else if (background[pacman_player.y + 1][pacman_player.x] == 5)
         {
-            score += 5;
+            score += 50;
             // poder especial
         }
         source[pacman_player.y][pacman_player.x] = 0;
@@ -221,11 +221,11 @@ void moveRight ()
     {
         if (background[pacman_player.y][pacman_player.x + 1] == 2)
         {
-            score++;
+            score += 10;
         }
         else if (background[pacman_player.y][pacman_player.x + 1] == 5)
         {
-            score += 5;
+            score += 50;
             // poder especial
         }
         source[pacman_player.y][pacman_player.x] = 0;
