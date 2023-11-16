@@ -12,14 +12,18 @@ int main(void)
     configureTerminal();
     
     score = 0;
-    game_over = false;
 
     initialMenu();
 
     startGame();
     
     gameLoop();
-    
+
+    if (pacman_player.alive == false)
+    {
+        gameOver();
+    }
+    winner();
     ma_engine_uninit(&engine);
 
     return 0;

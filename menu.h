@@ -13,9 +13,33 @@
 #include "functions.h"
 
 
-int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS];
+int first_frame[ROWS][COLS], second_frame[ROWS][COLS], third_frame[ROWS][COLS], game_over_matrix[ROWS][COLS], you_win[ROWS][COLS];
 int line, col;
 char c;
+
+void youWin()
+{
+    FILE* youwin = fopen("youwin.txt", "r");
+
+    line = 0;
+    col = 0;
+
+    while ((c = fgetc(youwin)) != EOF)
+    {
+        if (c == '\r')
+        {
+            continue;
+        }
+        if (c == '\n')
+        {
+            col = 0;
+            line++;
+            continue;
+        }
+        you_win[line][col++] = c - '0';
+    }
+    fclose(youwin);
+}
 
 void matrixGameover()
 {
@@ -177,7 +201,7 @@ void printAnimation(int matrix[ROWS][COLS])
     fflush(stdout);        
 }
 
-void printGameover()
+void printScreen(int matrix[ROWS][COLS])
 {
     HIDE_CURSOR();
     MOVE_HOME();
@@ -186,17 +210,17 @@ void printGameover()
     {
         for (int  j = 0; j < COLS; j++)
         {
-            if (game_over_matrix[i][j] == 0)
+            if (matrix[i][j] == 0)
             {
                 printf("  ");
             }
-            else if (game_over_matrix[i][j] == 3)
+            else if (matrix[i][j] == 3)
             {
                 FOREGROUND_COLOR(250, 177, 7);
                 printf("%c ", 254);
                 RESET_FOREGROUND();
             }
-            else if (game_over_matrix[i][j] == 4)
+            else if (matrix[i][j] == 4)
             {
                 FOREGROUND_COLOR(255, 46, 122);
                 printf("%c ", 254);
@@ -205,7 +229,7 @@ void printGameover()
             else
             {
                 FOREGROUND_COLOR(7, 41, 179);
-                printWall(j, i, game_over_matrix);
+                printWall(j, i, matrix);
                 RESET_FOREGROUND();
             }
         }
@@ -220,7 +244,19 @@ void printGameover()
 void gameOver()
 {
     matrixGameover();
-    printGameover();
+    while (1)
+    {
+        printScreen(game_over_matrix);
+    }
+}
+
+void winner()
+{
+    youWin();
+    while (1)
+    {
+        printScreen(you_win);
+    }
 }
 
 void initialMenu()

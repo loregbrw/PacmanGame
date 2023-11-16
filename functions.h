@@ -25,6 +25,8 @@ typedef struct Node
 typedef struct
 {
     bool recalculate;
+    bool alive;
+    bool win;
     Node_T route[ROWS][COLS];
     int x, y;
 } Character;
@@ -34,7 +36,7 @@ Character pacman_player;
 Character ghosts[4];
 
 char user_input;
-bool game_over, recalculate = true;
+bool recalculate = true;
 
 ma_result result;
 ma_engine engine;
@@ -424,12 +426,6 @@ void commands(int input)
     }
 }
 
-void gameOver()
-{
-    // ma_engine_play_sound(&engine, "morte.mp3", NULL);
-    // GAMEOVER
-}
-
 void printWall(int x, int y, int matrix[ROWS][COLS]) 
 {
     int up = 0, down = 0, left = 0, right = 0;
@@ -538,19 +534,6 @@ void printMatrix()
     fflush(stdout);        
 }
 
-void animationPrint()
-{
-
-}
-
-void menuPage()
-{
-    while (getInput() != 13)
-    {
-        /* code */
-    }
-    
-}
 
 void gameLoop()
 {
@@ -558,10 +541,12 @@ void gameLoop()
 
     while (1)
     {
+        pacman_player.alive = false;
+        pacman_player.win = true;
         ticks++;
         commands(getInput());
 
-        if (ticks % 500 == 0)
+        if (ticks % 300 == 0)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -577,7 +562,26 @@ void gameLoop()
         background[ghosts[2].y][ghosts[2].x] = 6;
         background[ghosts[3].y][ghosts[3].x] = 6;
 
-        
+        for (int i = 0; i < ROWS; i++)
+        {
+            for (int j = 0; j < COLS; j++)
+            {
+                if (background[i][j] == 3)
+                {
+                    pacman_player.alive = true;
+                }
+                if (background[i][j] == 2 || background[i][j] == 5)
+                {
+                    pacman_player.win = false;
+                }
+                
+            }
+        }
+
+        if (pacman_player.alive == false || pacman_player.win == true)
+        {
+            return;
+        }
         printMatrix();
     }
 }

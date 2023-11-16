@@ -389,26 +389,25 @@ void commands(int input)
     }
 }
 
-
-void printWall(int x, int y) 
+void printWall(int x, int y, int matrix[ROWS][COLS]) 
 {
     int up = 0, down = 0, left = 0, right = 0;
 
     if (x != 19)
     {
-        if (background[y][x+1] == 1) {right = 1;}
+        if (matrix[y][x+1] == 1) {right = 1;}
     }
     if (x != 0)
     {
-        if (background[y][x-1] == 1) {left = 1;}
+        if (matrix[y][x-1] == 1) {left = 1;}
     }
     if (y != 19)
     {
-        if (background[y+1][x] == 1) {down = 1;}
+        if (matrix[y+1][x] == 1) {down = 1;}
     }
     if (y != 0)
     {
-        if (background[y-1][x] == 1) {up = 1;}
+        if (matrix[y-1][x] == 1) {up = 1;}
     }
 
     if (up && down && right) {printf("%c%c", 204, 205);}
@@ -486,7 +485,7 @@ void printMatrix()
             else
             {
                 FOREGROUND_COLOR(7, 41, 179);
-                printWall(j, i);
+                printWall(j, i, background);
                 RESET_FOREGROUND();
             }
         }
@@ -497,7 +496,6 @@ void printMatrix()
 
     fflush(stdout);        
 }
-
 
 void gameLoop()
 {
