@@ -113,6 +113,30 @@ void printAnimation(int matrix[ROWS][COLS])
                 printf("%c ", 254);
                 RESET_FOREGROUND();
             }
+            else if (matrix[i][j] == 4)
+            {
+                printf("p ");
+            }
+            else if (matrix[i][j] == 5)
+            {
+                printf("r ");
+            }
+            else if (matrix[i][j] == 6)
+            {
+                printf("e ");
+            }
+            else if (matrix[i][j] == 7)
+            {
+                printf("s ");
+            }
+            else if (matrix[i][j] == 8)
+            {
+                printf("n ");
+            }
+            else if (matrix[i][j] == 9)
+            {
+                printf("t ");
+            }
             else
             {
                 FOREGROUND_COLOR(7, 41, 179);

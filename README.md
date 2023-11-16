@@ -20,3 +20,15 @@ frutinhas = 5
 fundo = 199
 . - pacman -fruit
 = 197
+
+p = 4
+r = 5
+e = 6
+s = 7
+s = 7
+
+e = 6
+n = 8
+t = 9
+e = 6
+r = 5
