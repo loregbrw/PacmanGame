@@ -31,7 +31,6 @@ typedef struct
     int x, y;
 } Character;
 
-
 Character pacman_player;
 Character ghosts[4];
 
@@ -389,10 +388,6 @@ void commands(int input)
         }
         moveRight(); // D key, right
     }
-    else if (input == 13)
-    {
-        // Tecla enter
-    }
 }
 
 void printWall(int x, int y, int matrix[ROWS][COLS]) 
@@ -517,7 +512,7 @@ void gameLoop()
         ticks++;
         commands(getInput());
 
-        if (ticks % 500 == 0)
+        if (ticks % 1000 == 0)
         {
             for (int i = 0; i < 4; i++)
             {
@@ -545,7 +540,6 @@ void gameLoop()
                 {
                     pacman_player.win = false;
                 }
-                
             }
         }
 
@@ -555,7 +549,7 @@ void gameLoop()
     }
 }
 
-void startGame() // funções para começar o jogo
+void startGame()
 {
     ma_engine_play_sound(&engine, "sounds/abertura.mp3", NULL);
     
@@ -569,7 +563,6 @@ void startGame() // funções para começar o jogo
     }
     
     printMatrix();
-    // Sleep(5000);
 }
 
 #endif

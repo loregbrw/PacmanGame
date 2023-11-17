@@ -178,7 +178,7 @@ void printAnimation(int matrix[ROWS][COLS])
         printf("\n");
     }
     FOREGROUND_COLOR(255, 46, 122);
-    printf("\n>> u s e   t h e   W A S D   k e y s <<");
+    printf("\n   u s e   t h e   W A S D   k e y s   ");
     RESET_FOREGROUND();
     ERASE_LEND();
 
