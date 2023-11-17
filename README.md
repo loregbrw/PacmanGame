@@ -1,34 +1,31 @@
-# PacmanGame
+# Pac-Man in C
 
+This is a simple recreation of the classic Pac-Man game in C. The game utilizes the terminal for display and incorporates features such as player movement, ghosts, scoring, maze and special fruits.
 
-Recriação do jogo do Pacman utilizando a linguagem C
+### Installation 
+**1.**  Clone the repository:
+```bash
+git clone https://github.com/your-username/PacmanGame.git
+cd PacmanGame
+```
+**2.** Compile the code on **cmd**:
+```
+\PacmanGame>build
+```
 
-w = 119
-a = 97
-s = 115
-d = 100
-enter = 13
-espaço = 32
+**3.** Execute "pacman.exe".
 
-fundo = 0
-paredes = 1
-bolinhas = 2
-pacman = 3
-fantasmas = 4
-frutinhas = 5
+### Game Controls
+**W:** Move Pac-Man upward.\
+**A:** Move Pac-Man to the left.\
+**S:** Move Pac-Man downward.\
+**D:** Move Pac-Man to the right.
 
-fundo = 199
-. - pacman -fruit
-= 197
+### How to Play
+Navigate Pac-Man through the maze, eating dots and fruits while avoiding ghosts. Win the game by collecting as many points as possible.
 
-p = 4
-r = 5
-e = 6
-s = 7
-s = 7
-
-e = 6
-n = 8
-t = 9
-e = 6
-r = 5
+### Features
+**Gameplay:** Control Pac-Man using the WASD keys to navigate through the maze.\
+**Ghosts:** Four ghosts find a random path to the Pac-Man through the maze.\
+**Sound Effects:** Cool sound effects for actions like eating special fruits, dying and more.\
+**Score Tracking:** Keep track of your score as you progress through the game.

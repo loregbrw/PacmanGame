@@ -253,9 +253,9 @@ bool flood(Node_T background[ROWS][COLS], int x, int y, int x_destiny, int y_des
 
     background[y][x].parent = &background[parent_y][parent_x];
 
-    if (x == x_destiny && y == y_destiny) //Encontrado
+    if (x == x_destiny && y == y_destiny) // Found
     {
-        lastx = x; //Cordenadas destion/ultimo
+        lastx = x; // Destination/last coordinates
         lasty = y;
 
         return true;
