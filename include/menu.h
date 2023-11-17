@@ -177,9 +177,8 @@ void printAnimation(int matrix[ROWS][COLS])
         }
         printf("\n");
     }
-    printf("\nscore: ");
-    FOREGROUND_COLOR(250, 177, 7);
-    printf("%i", score);
+    FOREGROUND_COLOR(255, 46, 122);
+    printf("\n>> u s e   t h e   W A S D   k e y s <<");
     RESET_FOREGROUND();
     ERASE_LEND();
 
@@ -218,9 +217,8 @@ void printScreen(int matrix[ROWS][COLS])
         }
         printf("\n");
     }
-    printf("\nscore: ");
-    FOREGROUND_COLOR(250, 177, 7);
-    printf("%i", score);
+    FOREGROUND_COLOR(255, 46, 122);
+    printf("\n     >>  p r e s s   e n t e r  <<      ");
     RESET_FOREGROUND();
     ERASE_LEND();
 
@@ -231,7 +229,7 @@ void gameOver()
 {
     ma_engine_play_sound(&engine, "sounds/morte.mp3", NULL);
     matrixGameover();
-    while (1)
+    while (getInput() != 13)
     {
         printScreen(game_over_matrix);
     }
@@ -240,7 +238,7 @@ void gameOver()
 void winner()
 {
     youWin();
-    while (1)
+    while (getInput() != 13)
     {
         printScreen(you_win);
     }
