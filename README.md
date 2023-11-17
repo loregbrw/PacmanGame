@@ -32,5 +32,5 @@ Navigate the Pac-Man through the maze, eating dots and fruits while avoiding gho
 **Score Tracking:** Keep track of your score as you progress through the game.
 
 ### Acknowledgments
-**1.** This project utilizes the "terminal.h" library by @akda007 to customize the terminal.\
-**2.** Pathfinding logic by @akda007.
+**1.** This project utilizes the "terminal.h" library by [@akda007](https://github.com/akda007) to customize the terminal.\
+**2.** Pathfinding logic by [@akda007](https://github.com/akda007).
