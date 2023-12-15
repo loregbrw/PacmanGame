@@ -7,7 +7,7 @@ This is a simple recreation of the classic Pac-Man game in C. The game utilizes 
 ### Installation 
 **1.**  Clone the repository:
 ```bash
-git clone https://github.com/your-username/PacmanGame.git
+git clone https://github.com/loregbrw/PacmanGame.git
 cd PacmanGame
 ```
 **2.** Compile the code on **cmd**:
