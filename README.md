@@ -10,12 +10,7 @@ This is a simple recreation of the classic Pac-Man game in C. The game utilizes 
 git clone https://github.com/loregbrw/PacmanGame.git
 cd PacmanGame
 ```
-**2.** Compile the code on **cmd**:
-```
-\PacmanGame>build
-```
-
-**3.** Execute "pacman.exe".
+**2.** Execute "pacman.exe".
 
 ##
 
