@@ -34,6 +34,10 @@ Navigate the Pac-Man through the maze, eating dots and fruits while avoiding gho
 **Sound Effects:** Sound effects for actions like eating special fruits, dying and more.\
 **Score Tracking:** Keep track of your score as you progress through the game.
 
+##
+### License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
 <br>
 
 > [!NOTE]
